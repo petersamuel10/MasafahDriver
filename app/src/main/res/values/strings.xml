@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Masafah Driver</string>
+    <string name="mobile">Mobile</string>
+    <string name="upload_shipment_photos">Upload shipment photos</string>
+    <string name="shipment_name">Shipment name*</string>
+    <string name="description">Description*</string>
+    <string name="next">Next</string>
+    <string name="items">Items</string>
+    <string name="add_new_shipment">Add new shipment</string>
+    <string name="add_new_item">Add new item</string>
+    <string name="select_location">Select location</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="price">Price</string>
+    <string name="shipment_number">Shipment #</string>
+    <string name="test_description">This is the description for the shipment that has been added as a part of \'My Shipments\'</string>
+    <string name="pending">Pending</string>
+    <string name="distance">Distance</string>
+    <string name="accepted">Accepted</string>
+    <string name="by">By</string>
+    <string name="shipment_details">Shipment details</string>
+    <string name="delivered">Delivered</string>
+    <string name="total">Total:</string>
+    <string name="canceled">Canceled</string>
+    <string name="no_shipments_message">There are no shipments</string>
+    <string name="shipment_history">Shipment history</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="company_details">Company details</string>
+    <string name="company_test_description">International shipping, courier, and packaging service. DHL was
+        established in 1969 by Adrian Dalsey, Larry Hillblom, and Robert Lynn. The name DHL is derived from the
+        first initial of each founder\'s last name. DHL has numerous cargo transport systems including planes,
+        trains, and boats. DHL serves more than 120,000 designations and 220 countries. As of 2002, Deutsche Post
+        World Net owns the majority of shares.</string>
+    <string name="continue_button">Continue</string>
+    <string name="my_shipments">My shipments</string>
+    <string name="orders">Orders</string>
+    <string name="multiple_selection_message">You can select multiple shipments to deliver at once</string>
+    <string name="list_of_orders">List of orders</string>
+    <string name="you_need_to_pay">You need to pay</string>
+    <string name="pickup">Pickup</string>
+    <string name="buy_points">Buy points</string>
+    <string name="please_select_one_package">Please select one package:</string>
+</resources>

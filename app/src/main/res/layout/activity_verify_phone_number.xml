@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/verify_number_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/black">
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <TextView
+        android:id="@+id/verify_your_number_tag"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Verify your phone number"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_number_toolbar" />
+
+    <TextView
+        android:id="@+id/enter_otp_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Enter your OTP code here"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/verify_your_number_tag" />
+
+    <LinearLayout
+        android:id="@+id/edit_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_otp_tag">
+
+        <EditText
+            android:id="@+id/otp_code_1"
+            style="@style/pin_edittext_style"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+
+            android:focusableInTouchMode="true"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/otp_code_2"
+            style="@style/pin_edittext_style"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="26sp"
+            app:layout_constraintStart_toEndOf="@+id/otp_code_1" />
+
+        <EditText
+            android:id="@+id/otp_code_3"
+            style="@style/pin_edittext_style"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="26sp"
+            app:layout_constraintStart_toEndOf="@+id/otp_code_2" />
+
+        <EditText
+
+            android:id="@+id/otp_code_4"
+            style="@style/pin_edittext_style"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/otp_code_3" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/verify_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/button_rounded_primary"
+        android:text="Verify Now"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_layout" />
+
+
+</android.support.constraint.ConstraintLayout>

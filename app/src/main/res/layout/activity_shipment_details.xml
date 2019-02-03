@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/shipment_details_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/black">
+
+        <TextView
+            android:id="@+id/shipment_details_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/shipment_details"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shipment_details_toolbar">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/shipment_detail_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_corners_white_filled">
+
+                <TextView
+                    android:id="@+id/shipment_number_tag"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/shipment_number"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/shipment_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="122332"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/shipment_number_tag"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/shipment_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/test_description"
+                    android:textColor="#A1A1A1"
+                    app:layout_constraintEnd_toEndOf="@+id/shipment_number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shipment_number_tag" />
+
+                <TextView
+                    android:id="@+id/images_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Images"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/shipment_description" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/images_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/images_tag" />
+
+                <View
+                    android:id="@+id/horizontal_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/dotted_horizontal_grey_line"
+                    android:layerType="software"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/images_list" />
+
+                <TextView
+                    android:id="@+id/pickup_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Salmiya"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintStart_toEndOf="@+id/filled_circle"
+                    app:layout_constraintTop_toBottomOf="@+id/horizontal_line" />
+
+                <ImageView
+                    android:id="@+id/filled_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/horizontal_line"
+                    app:srcCompat="@drawable/ic_filled_circle" />
+
+                <ImageView
+                    android:id="@+id/empty_circle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/drop_location_area"
+                    app:srcCompat="@drawable/ic_empty_circle" />
+
+                <TextView
+                    android:id="@+id/drop_location_area"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="Hawalli"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/empty_circle"
+                    app:layout_constraintTop_toBottomOf="@+id/pickup_person_number" />
+
+                <TextView
+                    android:id="@+id/pickup_location_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Block 5 street 3"
+                    app:layout_constraintStart_toEndOf="@+id/filled_circle"
+                    app:layout_constraintTop_toBottomOf="@+id/pickup_location" />
+
+                <TextView
+                    android:id="@+id/pickup_person_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="Fakhruddin - "
+                    app:layout_constraintStart_toEndOf="@+id/filled_circle"
+                    app:layout_constraintTop_toBottomOf="@+id/pickup_location_address" />
+
+                <TextView
+                    android:id="@+id/pickup_mobile_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="55662233"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/pickup_person_number"
+                    app:layout_constraintTop_toBottomOf="@+id/pickup_location_address" />
+
+                <TextView
+                    android:id="@+id/drop_location_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Block 6 street 3"
+                    app:layout_constraintStart_toStartOf="@+id/drop_location_area"
+                    app:layout_constraintTop_toBottomOf="@+id/drop_location_area" />
+
+                <TextView
+                    android:id="@+id/drop_person_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Mohammed -"
+                    app:layout_constraintStart_toStartOf="@+id/drop_location_area"
+                    app:layout_constraintTop_toBottomOf="@+id/drop_location_address" />
+
+                <TextView
+                    android:id="@+id/drop_contact_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="88775544"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/drop_person_name"
+                    app:layout_constraintTop_toTopOf="@+id/drop_person_name" />
+
+                <View
+                    android:id="@+id/vertical_dotted_lines"
+                    android:layout_width="80dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/vertical_dotted_lines_small"
+                    android:layerType="software"
+                    app:layout_constraintBottom_toTopOf="@+id/empty_circle"
+                    app:layout_constraintEnd_toStartOf="@+id/pickup_location_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/filled_circle" />
+
+                <ImageView
+                    android:id="@+id/location_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#E3EDFA"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/drop_person_name"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:srcCompat="@drawable/ic_location_on_primary_24dp" />
+
+                <TextView
+                    android:id="@+id/distance_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/distance"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="10sp"
+                    app:layout_constraintStart_toEndOf="@+id/location_icon"
+                    app:layout_constraintTop_toTopOf="@+id/location_icon" />
+
+                <TextView
+                    android:id="@+id/distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="12 km"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/location_icon"
+                    app:layout_constraintTop_toBottomOf="@+id/distance_tag" />
+
+                <View
+                    android:id="@+id/horizontal_line_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/dotted_horizontal_grey_line"
+                    android:layerType="software"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/location_icon" />
+
+
+                <TextView
+                    android:id="@+id/total_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/total"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/horizontal_line_2" />
+
+                <TextView
+                    android:id="@+id/total_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="25 KD"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/horizontal_line_2" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <Button
+                android:id="@+id/pick_up_button"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@+id/shipment_detail_layout"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/pickup"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
