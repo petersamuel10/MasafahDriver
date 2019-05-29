@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_masafah">
@@ -40,15 +42,15 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
-            android:text="Please enter your mobile number"
+            android:text="@string/please_enter_email_and_password"
             android:textColor="#333333"
-            android:textSize="17sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/masafah_icon" />
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/mobile_layout"
+            android:id="@+id/email_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -59,19 +61,47 @@
             android:background="@drawable/rounded_corners_white_filled"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="Mobile"
+            android:hint="@string/email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_in_tag">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/mobile_number"
+                android:id="@+id/email_ed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#333333"
-                android:drawableStart="@drawable/ic_phone_android_grey_24dp"
-                android:drawableLeft="@drawable/ic_phone_android_grey_24dp"
-                android:inputType="number" />
+                android:drawableStart="@drawable/ic_email_grey_24dp"
+                android:drawableLeft="@drawable/ic_email_grey_24dp"
+                android:inputType="textEmailAddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/rounded_corners_white_filled"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_layout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/password_ed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#333333"
+                android:drawableStart="@drawable/ic_lock_black_24dp"
+                android:drawableLeft="@drawable/ic_lock_black_24dp"
+                android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -89,10 +119,27 @@
             android:text="@string/continue_button"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout" />
+
+        <TextView
+            android:id="@+id/create_new_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="32dp"
+            android:textSize="16sp"
+            android:text="@string/create_new_account"
+            android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mobile_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/continue_buton" />
 
     </android.support.constraint.ConstraintLayout>
 

@@ -1,5 +1,6 @@
-package com.vavisa.masafahdriver.activities;
+package com.vavisa.masafahdriver.tap_profile.wallet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,56 +12,48 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
+import com.vavisa.masafahdriver.activities.BaseActivity;
+import com.vavisa.masafahdriver.tap_profile.balance.AddBalance;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyPointsActivity extends BaseActivity {
+public class WalletActivity extends BaseActivity {
 
-  private RecyclerView buyPointsList;
-  private List<BuyPoint> buyPoints;
+  private TextView add_balance_btn;
+  private RecyclerView wallet_rec;
+  private ArrayList<WalletModel> walletList;
   private static int selectedPosition = -1;
+  private WalletAdapter adapter;
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_buy_points);
+    setContentView(R.layout.activity_wallet);
+    wallet_rec = findViewById(R.id.buy_points_list);
+    add_balance_btn = findViewById(R.id.add_balance_tag);
+    add_balance_btn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(new Intent(WalletActivity.this, AddBalance.class));
+      }
+    });
 
-    buyPointsList = findViewById(R.id.buy_points_list);
 
-    buyPoints = new ArrayList<>();
+    walletList = new ArrayList<>();
+    walletList.add(new WalletModel("27/9/2019","+120.000 Kd",""));
+    walletList.add(new WalletModel("27/9/2019","-30.000 Kd","1258"));
+    walletList.add(new WalletModel("27/9/2019","-20.000 Kd","1258"));
+    walletList.add(new WalletModel("27/9/2019","-70.000 Kd","1258"));
 
-    BuyPoint buyPoint = new BuyPoint();
-    buyPoint.setBuyPoint("100 point");
-    buyPoint.setPrice("1 KD");
-
-    buyPoints.add(buyPoint);
-
-    buyPoint = new BuyPoint();
-    buyPoint.setBuyPoint("250 point");
-    buyPoint.setPrice("2 KD");
-
-    buyPoints.add(buyPoint);
-
-    buyPoint = new BuyPoint();
-    buyPoint.setBuyPoint("500 point");
-    buyPoint.setPrice("3 KD");
-
-    buyPoints.add(buyPoint);
-
-    buyPoint = new BuyPoint();
-    buyPoint.setBuyPoint("1000 point");
-    buyPoint.setPrice("4 KD");
-
-    buyPoints.add(buyPoint);
-
-    buyPointsList.setLayoutManager(new LinearLayoutManager(this));
-    buyPointsList.addItemDecoration(new BottomSpaceItemDecoration(25));
-    buyPointsList.setAdapter(new BuyPointsAdapter());
+    wallet_rec.setLayoutManager(new LinearLayoutManager(this));
+    wallet_rec.addItemDecoration(new BottomSpaceItemDecoration(25));
+    adapter = new WalletAdapter(walletList);
+    wallet_rec.setAdapter(adapter);
   }
 
-  private class BuyPointViewHolder extends RecyclerView.ViewHolder {
+ /* private class BuyPointViewHolder extends RecyclerView.ViewHolder {
 
     private TextView buyPoint;
     private TextView price;
@@ -129,35 +122,6 @@ public class BuyPointsActivity extends BaseActivity {
     public int getItemCount() {
       return buyPoints.size();
     }
-  }
+  }*/
 
-  private class BuyPoint {
-    boolean selected;
-    String buyPoint;
-    String price;
-
-    public boolean isSelected() {
-      return selected;
-    }
-
-    public void setSelected(boolean selected) {
-      this.selected = selected;
-    }
-
-    public String getBuyPoint() {
-      return buyPoint;
-    }
-
-    public void setBuyPoint(String buyPoint) {
-      this.buyPoint = buyPoint;
-    }
-
-    public String getPrice() {
-      return price;
-    }
-
-    public void setPrice(String price) {
-      this.price = price;
-    }
-  }
 }

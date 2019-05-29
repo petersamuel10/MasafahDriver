@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    tools:context=".tap_profile.balance.AddBalance">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/buy_points_toolbar"
@@ -21,52 +21,53 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/buy_points"
+            android:text="@string/add_balance"
             android:textColor="@android:color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
 
     </android.support.v7.widget.Toolbar>
-
     <TextView
-        android:id="@+id/select_package_tag"
+        android:id="@+id/add_balance_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/please_select_one_package"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buy_points_toolbar" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/buy_points_list"
+        android:id="@+id/balance_rec"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/continue_button"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/add_balance_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_package_tag" />
+        app:layout_constraintTop_toBottomOf="@+id/add_balance_tag"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/continue_button"
+        android:id="@+id/add_balance_btn"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimary"
-        android:text="@string/continue_button"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/button_rounded_corners_primary_filled"
+        android:text="@string/add"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,4 +1,4 @@
-package com.vavisa.masafahdriver.fragments;
+package com.vavisa.masafahdriver.tap_profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +23,9 @@ import android.widget.TextView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.BuyPointsActivity;
+import com.vavisa.masafahdriver.fragments.BaseFragment;
+import com.vavisa.masafahdriver.tap_profile.wallet.WalletActivity;
+import com.vavisa.masafahdriver.tap_profile.shipment_history.ShipmentHistoryFragment;
 import com.vavisa.masafahdriver.activities.LoginActivity;
 import com.vavisa.masafahdriver.util.GridSpaceItemDecoration;
 
@@ -146,12 +148,17 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
               Fragment fragment = null;
               switch (position) {
                 case 0:
-                  DialogPlus dialogPlus =
+                  final DialogPlus dialogPlus =
                       DialogPlus.newDialog(getActivity())
                           .setGravity(Gravity.BOTTOM)
                           .setContentBackgroundResource(R.drawable.rounded_corners_white_filled)
                           .setContentHolder(new ViewHolder(R.layout.profile_view))
                           .create();
+
+                  ImageView close_icon = (ImageView) dialogPlus.findViewById(R.id.close_icon);
+                  close_icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) { dialogPlus.dismiss(); }});
 
                   dialogPlus.show();
                   break;
@@ -163,7 +170,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                   break;
 
                 case 4:
-                  startActivity(new Intent(getActivity(), BuyPointsActivity.class));
+                  startActivity(new Intent(getActivity(), WalletActivity.class));
                   break;
               }
             }
@@ -204,8 +211,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     profileItems.add(profile);
 
     profile = new Profile();
-    profile.setImage(R.drawable.ic_store);
-    profile.setName("Buy points");
+    profile.setImage(R.drawable.ic_document);
+    profile.setName("Wallet");
 
     profileItems.add(profile);
   }

@@ -6,4 +6,6 @@
     <color name="background">#EEEEEE</color>
     <color name="colorControlNormal">#333333</color>
     <color name="defaultText">#808080</color>
+    <color name="green">#00FF00</color>
+    <color name="grey">#E5E5E5</color>
 </resources>

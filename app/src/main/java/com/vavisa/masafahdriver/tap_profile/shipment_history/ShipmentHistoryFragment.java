@@ -1,4 +1,4 @@
-package com.vavisa.masafahdriver.fragments;
+package com.vavisa.masafahdriver.tap_profile.shipment_history;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
+import com.vavisa.masafahdriver.fragments.BaseFragment;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -118,57 +119,4 @@ public class ShipmentHistoryFragment extends BaseFragment implements View.OnClic
     }
   }
 
-  private class MyShipmentsViewHolder extends RecyclerView.ViewHolder {
-
-    public MyShipmentsViewHolder(@NonNull View itemView) {
-      super(itemView);
-
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        itemView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
-        itemView.setClipToOutline(true);
-      }
-    }
-  }
-
-  private class MyShipmentsCanceledAdapter extends RecyclerView.Adapter<MyShipmentsViewHolder> {
-
-    @NonNull
-    @Override
-    public MyShipmentsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-      View v =
-          LayoutInflater.from(viewGroup.getContext())
-              .inflate(R.layout.shipment_history_canceled_list_item, viewGroup, false);
-
-      return new MyShipmentsViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull MyShipmentsViewHolder myShipmentsViewHolder, int i) {}
-
-    @Override
-    public int getItemCount() {
-      return myShipments.size();
-    }
-  }
-
-  private class MyShipmentsDeliveredAdapter extends RecyclerView.Adapter<MyShipmentsViewHolder> {
-
-    @NonNull
-    @Override
-    public MyShipmentsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-      View v =
-          LayoutInflater.from(viewGroup.getContext())
-              .inflate(R.layout.shipment_history_delivered_list_item, viewGroup, false);
-
-      return new MyShipmentsViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull MyShipmentsViewHolder myShipmentsViewHolder, int i) {}
-
-    @Override
-    public int getItemCount() {
-      return myShipments.size();
-    }
-  }
 }

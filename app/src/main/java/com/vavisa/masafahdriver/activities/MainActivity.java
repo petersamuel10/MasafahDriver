@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.fragments.OrderFragment;
-import com.vavisa.masafahdriver.fragments.ProfileFragment;
-import com.vavisa.masafahdriver.fragments.ShipmentHistoryFragment;
+import com.vavisa.masafahdriver.tap_order.OrderFragment;
+import com.vavisa.masafahdriver.tap_profile.ProfileFragment;
+import com.vavisa.masafahdriver.tap_shipment.MyShipmentsFragment;
 
 import static com.vavisa.masafahdriver.util.FragmentUtil.getFragmentBackStackEntryAt;
 import static com.vavisa.masafahdriver.util.FragmentUtil.switchFragment;
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                   getSupportFragmentManager()
                       .popBackStack(2, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                  fragment = new ShipmentHistoryFragment();
+                  fragment = new MyShipmentsFragment();
                   switchFragment(getSupportFragmentManager(), fragment, "myShipments");
                 }
               }
