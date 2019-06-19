@@ -53,4 +53,6 @@
     <string name="order_id">رقم الطلب :</string>
     <string name="add">إضافة</string>
     <string name="shipments">الشحنات</string>
+    <string name="list_of_shipments">قائمة الشحنات</string>
+    <string name="error_occurred">حدث خطأ , حاول مرة اخرى.</string>
 </resources>

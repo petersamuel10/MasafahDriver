@@ -1,4 +1,4 @@
-package com.vavisa.masafahdriver.activities;
+package com.vavisa.masafahdriver.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
+import com.vavisa.masafahdriver.register.RegisterActivity;
+import com.vavisa.masafahdriver.verify.VerifyYourNumberActivity;
+import com.vavisa.masafahdriver.basic.BaseActivity;
 
 public class LoginActivity extends BaseActivity {
 
@@ -40,7 +43,7 @@ public class LoginActivity extends BaseActivity {
         create_new_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,Register.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }

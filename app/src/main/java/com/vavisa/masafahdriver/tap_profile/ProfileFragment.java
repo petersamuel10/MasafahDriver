@@ -23,10 +23,10 @@ import android.widget.TextView;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.fragments.BaseFragment;
+import com.vavisa.masafahdriver.basic.BaseFragment;
 import com.vavisa.masafahdriver.tap_profile.wallet.WalletActivity;
 import com.vavisa.masafahdriver.tap_profile.shipment_history.ShipmentHistoryFragment;
-import com.vavisa.masafahdriver.activities.LoginActivity;
+import com.vavisa.masafahdriver.login.LoginActivity;
 import com.vavisa.masafahdriver.util.GridSpaceItemDecoration;
 
 import java.util.ArrayList;

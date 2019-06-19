@@ -1,7 +1,6 @@
 package com.vavisa.masafahdriver.tap_order;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.ShipmentDetailsActivity;
 
 import java.util.List;
 
@@ -45,12 +43,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         final View itemView = myShipmentsViewHolder.itemView;
         final int position = myShipmentsViewHolder.getAdapterPosition();
 
-        myShipmentsViewHolder.itemView.setOnLongClickListener(
-                new View.OnLongClickListener() {
+        myShipmentsViewHolder.itemView.setOnClickListener(
+                new View.OnClickListener() {
                     @Override
-                    public boolean onLongClick(View v) {
+                    public void onClick(View v) {
 
-                        isLongClick = true;
                         orderFragment.deliveryButtonLayout.setVisibility(View.VISIBLE);
 
                         if (orderList.get(position).isSelected()) {
@@ -71,38 +68,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                                     context.getResources().getDrawable(R.drawable.rounded_primary_border));
 
                             orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
-                        }
-
-                        return true;
-                    }
-                });
-
-        myShipmentsViewHolder.itemView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isLongClick) {
-                            context.startActivity(new Intent(context, ShipmentDetailsActivity.class));
-                        } else {
-                            if (orderList.get(position).isSelected()) {
-                                itemView.setBackground(
-                                        context.getResources().getDrawable(R.drawable.rounded_corners_white_filled));
-                                orderList.get(position).setSelected(false);
-                                selectedCount--;
-
-                                orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
-
-                                if (selectedCount == 0) {
-                                    isLongClick = false;
-                                    orderFragment.deliveryButtonLayout.setVisibility(View.GONE);
-                                }
-                            } else {
-                                itemView.setBackground(
-                                        context.getResources().getDrawable(R.drawable.rounded_primary_border));
-                                orderList.get(position).setSelected(true);
-                                selectedCount++;
-                                orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
-                            }
                         }
                     }
                 });

@@ -23,7 +23,7 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.PaymentResult;
-import com.vavisa.masafahdriver.fragments.BaseFragment;
+import com.vavisa.masafahdriver.basic.BaseFragment;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;

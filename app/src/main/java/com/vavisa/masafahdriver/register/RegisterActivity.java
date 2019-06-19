@@ -1,4 +1,4 @@
-package com.vavisa.masafahdriver.activities;
+package com.vavisa.masafahdriver.register;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.vavisa.masafahdriver.R;
 
-public class Register extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     ImageView back_arrow;
 
