@@ -54,7 +54,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
     }
 
     @Override
-    public void showMessageToast(String msg) {
+    public void showMessage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

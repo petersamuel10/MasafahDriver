@@ -53,6 +53,10 @@ public class Preferences {
         editor.commit();
     }
 
+    public Boolean isHasKey(String key){
+        return getCurrent().contains(key);
+    }
+
     public void clear(){
         editor.clear().apply();
     }

@@ -14,17 +14,17 @@ import java.util.ArrayList;
 
 public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder> {
 
-    private ArrayList<WalletModel> walletList;
+    private ArrayList<WalletModel.TransactionDetails> walletList;
     private Context context;
 
-    public WalletAdapter(ArrayList<WalletModel> walletList) {
+    public WalletAdapter(ArrayList<WalletModel.TransactionDetails> walletList) {
         this.walletList = walletList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_wallet,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_wallet, parent, false);
         context = parent.getContext();
 
         return new ViewHolder(view);
@@ -32,14 +32,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         holder.bind(walletList.get(position));
-
-        if(position == 0){
-            holder.amount.setTextColor(context.getResources().getColor(R.color.green));
-            holder.order_id_tag.setVisibility(View.GONE);
-        }
-
     }
 
     @Override
@@ -49,7 +42,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView date,amount,order_id_tag,order_id;
+        TextView date, amount, order_id_tag, order_id;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,11 +53,18 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
             order_id = itemView.findViewById(R.id.order_id);
         }
 
-        public void bind(WalletModel walletModel) {
+        public void bind(WalletModel.TransactionDetails transaction) {
 
-            date.setText(walletModel.getDate());
-            amount.setText(walletModel.getAmount());
-            order_id.setText(walletModel.getOrder_id());
+            if (transaction.getIn()) {
+                amount.setTextColor(context.getResources().getColor(R.color.green));
+                order_id_tag.setVisibility(View.GONE);
+                order_id.setVisibility(View.GONE);
+                amount.setText("+ " + String.format("%.3f", Float.valueOf(transaction.getAmount())) + " " + context.getString(R.string.kd));
+            } else
+                amount.setText("- " + String.format("%.3f", Float.valueOf(transaction.getAmount())) + " " + context.getString(R.string.kd));
+
+            date.setText(transaction.getCreated_at());
+            order_id.setText(transaction.getOrder_id());
         }
     }
 }

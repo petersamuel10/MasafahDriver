@@ -60,4 +60,25 @@
     <string name="shipments">Shipments</string>
     <string name="list_of_shipments">List of shipments</string>
     <string name="error_occurred">Error occurred, Please try again.</string>
+    <string name="failed">Failed</string>
+    <string name="confirme_password">Confirme password</string>
+    <string name="select_country">Select country</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="select_picture_from">Select picture from</string>
+    <string name="please_select_picture">Please select picture</string>
+    <string name="please_enter_valid_phone_number">Please enter valid phone number</string>
+    <string name="please_enter_valid_email">Please enter valid email</string>
+    <string name="please_enter_password">Please enter password</string>
+    <string name="please_enter_confirm_password">Please enter confirm password</string>
+    <string name="confirm_password_not_match_password">Confirm password not match password</string>
+    <string name="please_enter_name">Please enter name</string>
+    <string name="select_language">Select language</string>
+    <string name="termsandconditions">Terms &amp; Conditions</string>
+    <string name="language">Language</string>
+    <string name="my_details">My details</string>
+    <string name="update">Update</string>
+    <string name="kd">KD</string>
+    <string name="free_delevery">Free delivery(s)</string>
+    <string name="add_successfully">Add successfully.</string>
 </resources>

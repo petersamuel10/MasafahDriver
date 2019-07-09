@@ -55,4 +55,25 @@
     <string name="shipments">الشحنات</string>
     <string name="list_of_shipments">قائمة الشحنات</string>
     <string name="error_occurred">حدث خطأ , حاول مرة اخرى.</string>
+    <string name="failed">فشل</string>
+    <string name="confirme_password">تأكيد كلمة المرور</string>
+    <string name="select_country">اختر الدولة </string>
+    <string name="camera">الكاميرا</string>
+    <string name="gallery">الاستوديو</string>
+    <string name="select_picture_from">اختر صوره من</string>
+    <string name="confirm_password_not_match_password">تأكيد كلمة المرور غير مطابق لكلمة المرور</string>
+    <string name="please_enter_confirm_password">الرجاء ادخال تأكيد كلمة المرور</string>
+    <string name="please_enter_password">الرجاء اخال كلمة مرور</string>
+    <string name="please_enter_valid_email">الرجاء ادخال البريد الالكتروني</string>
+    <string name="please_enter_valid_phone_number">الرجاء ادخال رقم الجوال</string>
+    <string name="please_select_picture">الرجاء اختيار صوره</string>
+    <string name="please_enter_name">الرجاء ادخال الاسم</string>
+    <string name="termsandconditions">الشروط والاحكام</string>
+    <string name="select_language">اختر اللغة</string>
+    <string name="my_details">بياناتى</string>
+    <string name="language">اللغة</string>
+    <string name="update">تحديث</string>
+    <string name="kd">دك</string>
+    <string name="free_delevery">توصيل مجاني</string>
+    <string name="add_successfully">تمت الاضاقة بنجاح</string>
 </resources>

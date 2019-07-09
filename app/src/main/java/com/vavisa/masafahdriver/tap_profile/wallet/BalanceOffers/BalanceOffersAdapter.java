@@ -1,4 +1,4 @@
-package com.vavisa.masafahdriver.tap_profile.balance;
+package com.vavisa.masafahdriver.tap_profile.wallet.BalanceOffers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,13 +13,14 @@ import com.vavisa.masafahdriver.R;
 
 import java.util.ArrayList;
 
-public class AddBalanceAdapter extends RecyclerView.Adapter<AddBalanceAdapter.ViewHolder> {
+public class BalanceOffersAdapter extends RecyclerView.Adapter<BalanceOffersAdapter.ViewHolder> {
 
-    private ArrayList<BalanceModel> balanceList;
+    private ArrayList<BalanceOfferModel> balanceList;
     private Context context;
     private int selectedPosition = -1;
+    private BalanceOfferModel selectedPackage;
 
-    public AddBalanceAdapter(ArrayList<BalanceModel> balanceList) {
+    public BalanceOffersAdapter(ArrayList<BalanceOfferModel> balanceList) {
         this.balanceList = balanceList;
     }
 
@@ -37,17 +38,15 @@ public class AddBalanceAdapter extends RecyclerView.Adapter<AddBalanceAdapter.Vi
 
         holder.bind(balanceList.get(position));
 
-        if(position == selectedPosition)
+        if (position == selectedPosition)
             holder.balance_layer.setBackground(context.getResources().getDrawable(R.drawable.rounded_primary_border));
         else
             holder.balance_layer.setBackground(context.getResources().getDrawable(R.drawable.rounded_corners_white_filled));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = position;
-                notifyDataSetChanged();
-            }
+        holder.itemView.setOnClickListener(v -> {
+            selectedPosition = position;
+            selectedPackage = balanceList.get(position);
+            notifyDataSetChanged();
         });
 
     }
@@ -55,6 +54,10 @@ public class AddBalanceAdapter extends RecyclerView.Adapter<AddBalanceAdapter.Vi
     @Override
     public int getItemCount() {
         return balanceList.size();
+    }
+
+    public BalanceOfferModel getSelectedPackage() {
+        return selectedPackage;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,9 +74,10 @@ public class AddBalanceAdapter extends RecyclerView.Adapter<AddBalanceAdapter.Vi
         }
 
 
-        private void bind(BalanceModel balance) {
-            amount.setText(balance.getAmount());
-            offer.setText(balance.getOffer());
+        private void bind(BalanceOfferModel balance) {
+
+            amount.setText(String.format("%.3f",Float.valueOf(balance.getAmount())) + " " + context.getString(R.string.kd));
+            offer.setText(balance.getFree_deliveries() + " " + context.getString(R.string.free_delevery));
         }
     }
 }

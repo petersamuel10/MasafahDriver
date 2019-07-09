@@ -7,6 +7,7 @@ import android.util.Log;
 import com.onesignal.OneSignal;
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.util.Constants;
+import com.vavisa.masafahdriver.util.Preferences;
 
 
 public class BaseApplication extends Application {
@@ -34,7 +35,7 @@ public class BaseApplication extends Application {
                 new OneSignal.IdsAvailableHandler() {
                     @Override
                     public void idsAvailable(String userId, String registrationId) {
-                        Log.d("debug", "User:" + userId);
+                    //    Log.d("debug", "User:" + userId);
                         Constants.oneSignalToken = userId;
                         if (registrationId != null)
                             Log.d("debug", "registrationId:" + registrationId);
@@ -42,6 +43,12 @@ public class BaseApplication extends Application {
                 });
     }
 
+    public static void preventAccess() {
+        Preferences.getInstance().remove("access_token");
+        Preferences.getInstance().remove("user_id");
+        Preferences.getInstance().remove("mobile");
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
     public static Context getAppContext() {
         return context;
     }

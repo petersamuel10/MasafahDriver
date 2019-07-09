@@ -80,7 +80,7 @@ public class BaseFragment extends Fragment implements BaseView {
     }
 
     @Override
-    public void showMessageToast(String msg) {
+    public void showMessage(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

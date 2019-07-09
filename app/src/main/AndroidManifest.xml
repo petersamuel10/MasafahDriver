@@ -12,8 +12,9 @@
         android:name=".basic.BaseApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".tap_profile.balance.AddBalance"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".tap_profile.wallet.BalanceOffers.BalanceOffersActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.PaymentResult"

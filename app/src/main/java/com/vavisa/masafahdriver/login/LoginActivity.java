@@ -4,20 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.register.RegisterActivity;
-import com.vavisa.masafahdriver.verify.VerifyYourNumberActivity;
+import com.vavisa.masafahdriver.activities.MainActivity;
 import com.vavisa.masafahdriver.basic.BaseActivity;
+import com.vavisa.masafahdriver.register.RegisterActivity;
+import com.vavisa.masafahdriver.register.RegisterResponse;
+import com.vavisa.masafahdriver.register.UserModel;
+import com.vavisa.masafahdriver.util.Constants;
+import com.vavisa.masafahdriver.util.Preferences;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements LoginViews {
 
-    private TextInputEditText email_ed;
-    private TextInputEditText password_ed;
+    private TextInputEditText email_ed, password_ed;
     private TextView create_new_account;
+
+    private String email_str, password_str;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,22 +34,46 @@ public class LoginActivity extends BaseActivity {
         password_ed = findViewById(R.id.password_ed);
         create_new_account = findViewById(R.id.create_new_account);
 
-        continueButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        LoginPresenter presenter = new LoginPresenter();
+        presenter.attachView(this);
 
-                        Intent intent = new Intent(LoginActivity.this, VerifyYourNumberActivity.class);
-                       // intent.putExtra("mobileNumber", mobileNumber.getText().toString());
-                        startActivity(new Intent(LoginActivity.this, VerifyYourNumberActivity.class));
-                    }
-                });
-
-        create_new_account.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-            }
+        continueButton.setOnClickListener(v -> {
+            if (isValid())
+                presenter.login(new UserModel(email_str, password_str, Constants.oneSignalToken, 2));
         });
+
+        create_new_account.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+    }
+
+    private boolean isValid() {
+
+        if (TextUtils.isEmpty(email_ed.getText())) {
+            showMessage(getString(R.string.please_enter_name));
+            return false;
+        } else
+            email_str = email_ed.getText().toString();
+
+        if (TextUtils.isEmpty(password_ed.getText())) {
+            showMessage(getString(R.string.please_enter_name));
+            return false;
+        } else
+            password_str = password_ed.getText().toString();
+
+        return true;
+    }
+
+    @Override
+    public void handleLogin(RegisterResponse loginResponse) {
+
+        Preferences.getInstance().putString("mobile", loginResponse.getUser().getMobile());
+        Preferences.getInstance().putString("access_token", loginResponse.getAccess_token());
+        Preferences.getInstance().putString("use_id", loginResponse.getUser().getId());
+
+        if (getIntent().getExtras().containsKey("update_mobile"))
+            onBackPressed();
+        else
+            start(MainActivity.class);
+
+
     }
 }

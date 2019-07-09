@@ -5,51 +5,69 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.basic.BaseActivity;
-import com.vavisa.masafahdriver.tap_profile.balance.AddBalance;
+import com.vavisa.masafahdriver.tap_profile.wallet.BalanceOffers.BalanceOffersActivity;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 
-public class WalletActivity extends BaseActivity {
+public class WalletActivity extends BaseActivity implements WalletViews {
 
-  private TextView add_balance_btn;
-  private RecyclerView wallet_rec;
-  private ArrayList<WalletModel> walletList;
-  private static int selectedPosition = -1;
-  private WalletAdapter adapter;
+    private TextView add_balance_btn, balance_txt, free_delivery_txt;
+    private RecyclerView wallet_rec;
+    private WalletPresenter presenter;
+    private WalletAdapter adapter;
 
-  @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_wallet);
-    wallet_rec = findViewById(R.id.buy_points_list);
-    add_balance_btn = findViewById(R.id.add_balance_tag);
-    add_balance_btn.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        startActivity(new Intent(WalletActivity.this, AddBalance.class));
-      }
-    });
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_wallet);
+        initViews();
+
+        presenter = new WalletPresenter();
+        presenter.attachView(this);
+
+    }
 
 
-    walletList = new ArrayList<>();
-    walletList.add(new WalletModel("27/9/2019","+120.000 Kd",""));
-    walletList.add(new WalletModel("27/9/2019","-30.000 Kd","1258"));
-    walletList.add(new WalletModel("27/9/2019","-20.000 Kd","1258"));
-    walletList.add(new WalletModel("27/9/2019","-70.000 Kd","1258"));
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-    wallet_rec.setLayoutManager(new LinearLayoutManager(this));
-    wallet_rec.addItemDecoration(new BottomSpaceItemDecoration(25));
-    adapter = new WalletAdapter(walletList);
-    wallet_rec.setAdapter(adapter);
-  }
+        presenter.getWalletDetails();
 
- /* private class BuyPointViewHolder extends RecyclerView.ViewHolder {
+    }
+
+    private void initViews() {
+
+        wallet_rec = findViewById(R.id.buy_points_list);
+        add_balance_btn = findViewById(R.id.add_balance_tag);
+        balance_txt = findViewById(R.id.balance_txt);
+        free_delivery_txt = findViewById(R.id.free_delivery_txt);
+
+
+        add_balance_btn.setOnClickListener(v -> startActivity(new Intent(WalletActivity.this, BalanceOffersActivity.class)));
+
+        wallet_rec.setLayoutManager(new LinearLayoutManager(this));
+        wallet_rec.addItemDecoration(new BottomSpaceItemDecoration(25));
+    }
+
+    @Override
+    public void DisplayWalletDetails(WalletModel walletModel) {
+
+        balance_txt.setText(String.format("%.3f",Float.valueOf(walletModel.getWallet_balance()))+" " + getString(R.string.kd));
+        free_delivery_txt.setText(walletModel.getFree_deliveries() + " " + getString(R.string.free_delevery));
+
+        adapter = new WalletAdapter(walletModel.getTransactionDetails());
+
+        wallet_rec.setAdapter(adapter);
+
+    }
+
+    /* private class BuyPointViewHolder extends RecyclerView.ViewHolder {
 
     private TextView buyPoint;
     private TextView price;
