@@ -1,26 +1,27 @@
 package com.vavisa.masafahdriver.tap_my_shipment.shipment_details;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.ShipmentModel;
-import com.vavisa.masafahdriver.basic.BaseActivity;
+import com.vavisa.masafahdriver.basic.BaseFragment;
 
-public class ShipmentDetailsActivity extends BaseActivity implements ShipmentDetailsViews {
+public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDetailsViews {
 
     private ScrollView scrollView;
+    private View view;
     private TextView shipment_description,
             pickup_location, pickup_block_street, pickup_building, pickup_mobile,
             drop_location, drop_block_street, drop_building, drop_mobile,
@@ -30,19 +31,38 @@ public class ShipmentDetailsActivity extends BaseActivity implements ShipmentDet
     private ShipmentDetailsPresenter presenter;
     private String shipment_id, pickup_mobile_str, drop_mobile_str;
     private ShipmentModel shipmentModel;
-    private ShipmmentUpdateCallback callback;
+
+    public ShipmentDetailsFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_shipment_details);
-        initViews();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_shipment_details, container, false);
+    }
 
-        this.callback = (ShipmmentUpdateCallback) getIntent().getSerializableExtra("interface");
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        scrollView = view.findViewById(R.id.scrollView);
+        shipment_description = view.findViewById(R.id.shipment_description);
+        pickup_location = view.findViewById(R.id.pickup_location);
+        pickup_block_street = view.findViewById(R.id.pickup_block_street);
+        pickup_building = view.findViewById(R.id.pickup_building);
+        pickup_mobile = view.findViewById(R.id.pickup_mobile);
+        drop_location = view.findViewById(R.id.drop_location);
+        drop_block_street = view.findViewById(R.id.drop_block_street);
+        drop_building = view.findViewById(R.id.drop_building);
+        drop_mobile = view.findViewById(R.id.drop_mobile);
+        time_from_txt = view.findViewById(R.id.time_from);
+        total_txt = view.findViewById(R.id.total_amount);
+        pickup_btn = view.findViewById(R.id.pickup_btn);
 
         presenter = new ShipmentDetailsPresenter();
         presenter.attachView(this);
-        presenter.getDetails(getIntent().getStringExtra("shipment_id"));
+        presenter.getDetails(getArguments().getString("shipment_id"));
 
         pickup_btn.setOnClickListener(v -> {
             if (pickup_btn.getText().toString().equals(getString(R.string.pickup)))
@@ -51,57 +71,10 @@ public class ShipmentDetailsActivity extends BaseActivity implements ShipmentDet
                 presenter.deliveredShipment(shipment_id);
         });
 
-        pickup_mobile.setOnClickListener(v -> showCallAlert(pickup_mobile_str));
-        drop_mobile.setOnClickListener(v -> showCallAlert(drop_mobile_str));
-
-    }
-
-    private void showCallAlert(String mobile_str) {
-
-        AlertDialog.Builder callAlert = new AlertDialog.Builder(this);
-        callAlert.setTitle(R.string.call);
-        callAlert.setMessage(getString(R.string.are_you_want_to_call) + " " + mobile_str + " " + getString(R.string.question_mark));
-
-        callAlert.setPositiveButton(R.string.call, (dialog, which) -> {
-            boolean call = getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
-            if (call) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mobile_str));
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-
-        callAlert.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
-
-        callAlert.create().show();
-    }
-
-    private void initViews() {
-
-        Toolbar toolbar = findViewById(R.id.shipment_details_toolbar);
-        setSupportActionBar(toolbar);
-        setTitle("");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        scrollView = findViewById(R.id.scrollView);
-        shipment_description = findViewById(R.id.shipment_description);
-        pickup_location = findViewById(R.id.pickup_location);
-        pickup_block_street = findViewById(R.id.pickup_block_street);
-        pickup_building = findViewById(R.id.pickup_building);
-        pickup_mobile = findViewById(R.id.pickup_mobile);
-        drop_location = findViewById(R.id.drop_location);
-        drop_block_street = findViewById(R.id.drop_block_street);
-        drop_building = findViewById(R.id.drop_building);
-        drop_mobile = findViewById(R.id.drop_mobile);
-        time_from_txt = findViewById(R.id.time_from);
-        total_txt = findViewById(R.id.total_amount);
-        pickup_btn = findViewById(R.id.pickup_btn);
     }
 
     @Override
     public void displayDetails(ShipmentModel shipmentModel) {
-
         this.shipment_id = shipmentModel.getId();
         this.shipmentModel = shipmentModel;
 
@@ -138,22 +111,19 @@ public class ShipmentDetailsActivity extends BaseActivity implements ShipmentDet
             pickup_btn.setText(getString(R.string.delivered));
         else
             pickup_btn.setText(getString(R.string.pickup));
-
     }
 
     @Override
-    public void handlePickupAndDelivery(String isPickup, String msg) {
+    public void handlePickupAndDelivery(String action, String msg) {
         showMessage(msg);
-        if (true)
-            callback.handlePickedAction(shipmentModel);
-        else
-            callback.handleDeliveredAction(shipmentModel);
-        onBackPressed();
-    }
+        Intent intent = new Intent();
+        intent.putExtra("action", action);
+        intent.putExtra("datafrom", shipmentModel);
+        getTargetFragment().onActivityResult(
+                getTargetRequestCode(),
+                Activity.RESULT_OK,
+                intent);
+        getActivity().onBackPressed();
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return super.onSupportNavigateUp();
     }
 }

@@ -6,5 +6,5 @@ import com.vavisa.masafahdriver.basic.BaseView;
 public interface ShipmentDetailsViews extends BaseView {
 
     void displayDetails(ShipmentModel shipmentModel);
-    void handlePickupAndDelivery(boolean isPickup,String msg);
+    void handlePickupAndDelivery(String action,String msg);
 }

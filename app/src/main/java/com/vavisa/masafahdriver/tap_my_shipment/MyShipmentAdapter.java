@@ -1,11 +1,14 @@
 package com.vavisa.masafahdriver.tap_my_shipment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +19,7 @@ import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.ShipmentModel;
-import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmentDetailsActivity;
-import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmmentUpdateCallback;
+import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmentDetailsFragment;
 import com.vavisa.masafahdriver.util.Constants;
 
 import java.util.ArrayList;
@@ -26,13 +28,13 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
 
     private ArrayList<ShipmentModel> myShipmentList;
     private Context context;
-    private ShipmmentUpdateCallback callback;
+    private FragmentActivity activity;
+    private MyShipmentsFragment myShipmentsFragment;
 
-
-    public MyShipmentAdapter(ShipmmentUpdateCallback callback, ArrayList<ShipmentModel> myShipmentList) {
-        this.callback = callback;
+    public MyShipmentAdapter(ArrayList<ShipmentModel> myShipmentList, FragmentActivity activity, MyShipmentsFragment myShipmentsFragment) {
         this.myShipmentList = myShipmentList;
-
+        this.activity = activity;
+        this.myShipmentsFragment = myShipmentsFragment;
     }
 
     @NonNull
@@ -51,10 +53,19 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
 
         holder.bind(myShipmentList.get(position));
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ShipmentDetailsActivity.class);
-            intent.putExtra("shipment_id", myShipmentList.get(position).getId());
-            intent.putExtra("interface", callback);
-            context.startActivity(intent);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("shipment_id", myShipmentList.get(position).getId());
+            Fragment fragment = new ShipmentDetailsFragment();
+            fragment.setTargetFragment(myShipmentsFragment, 101);
+            fragment.setArguments(bundle);
+
+            FragmentTransaction fragmentTransaction =
+                    activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame_layout, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
         });
     }
 
@@ -115,16 +126,24 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
     }
 
     public void updateShipmentItem(ShipmentModel shipmentModel) {
-        int index = myShipmentList.indexOf(shipmentModel);
+        int index = getShipmentIndex(shipmentModel);
         shipmentModel.setStatus("3");
         myShipmentList.set(index, shipmentModel);
         notifyDataSetChanged();
     }
 
     public void removeShipmentItem(ShipmentModel shipmentModel) {
-        int index = myShipmentList.indexOf(shipmentModel);
-        myShipmentList.remove(shipmentModel);
+        int index = getShipmentIndex(shipmentModel);
+        myShipmentList.remove(index);
         notifyItemRemoved(index);
+    }
+
+    private int getShipmentIndex(ShipmentModel shipment) {
+        for (int i = 0; i < myShipmentList.size(); i++) {
+            if (shipment.getId().equals(myShipmentList.get(i).getId()))
+                return i;
+        }
+        return 0;
     }
 
 }

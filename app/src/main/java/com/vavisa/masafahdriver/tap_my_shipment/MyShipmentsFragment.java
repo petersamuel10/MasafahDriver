@@ -1,8 +1,7 @@
 package com.vavisa.masafahdriver.tap_my_shipment;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,15 +15,14 @@ import android.widget.TextView;
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.ShipmentModel;
 import com.vavisa.masafahdriver.basic.BaseFragment;
-import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmmentUpdateCallback;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
 import static com.vavisa.masafahdriver.activities.MainActivity.navigationView;
 
-@SuppressLint("ParcelCreator")
-public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews, ShipmmentUpdateCallback {
+public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews {
 
     private transient View fragment;
     private transient RecyclerView myShipment_rec;
@@ -71,28 +69,24 @@ public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews
             noShipmentsImage.setVisibility(View.VISIBLE);
             scrollView.setVisibility(View.GONE);
         } else {
-            adapter = new MyShipmentAdapter(this, myShipmentList);
+            adapter = new MyShipmentAdapter(myShipmentList, getActivity(), this);
             myShipment_rec.setAdapter(adapter);
         }
     }
 
     @Override
-    public void handlePickedAction(ShipmentModel shipmentModel) {
-        adapter.updateShipmentItem(shipmentModel);
-    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    @Override
-    public void handleDeliveredAction(ShipmentModel shipmentModel) {
-        adapter.removeShipmentItem(shipmentModel);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 101) {
+                String action = data.getStringExtra("action");
+                ShipmentModel shipment = data.getParcelableExtra("datafrom");
+                if (action.equals("pickup"))
+                    adapter.updateShipmentItem(shipment);
+                else
+                    adapter.removeShipmentItem(shipment);
+            }
+        }
     }
 }

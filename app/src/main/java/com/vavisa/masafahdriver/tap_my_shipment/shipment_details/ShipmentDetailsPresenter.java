@@ -42,7 +42,7 @@ public class ShipmentDetailsPresenter extends BasePresenter<ShipmentDetailsViews
                     public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                         getView().hideProgress();
                         if (response.code() == 200)
-                            getView().handlePickupAndDelivery(true,response.body().get("message"));
+                            getView().handlePickupAndDelivery("pickup",response.body().get("message"));
                         else
                             getView().showMissingData(response);
                     }
@@ -62,7 +62,7 @@ public class ShipmentDetailsPresenter extends BasePresenter<ShipmentDetailsViews
                     public void onResponse(Call<HashMap<String, String>> call, Response<HashMap<String, String>> response) {
                         getView().hideProgress();
                         if (response.code() == 200)
-                            getView().handlePickupAndDelivery(false,response.body().get("message"));
+                            getView().handlePickupAndDelivery("delivered",response.body().get("message"));
                         else
                             getView().showMissingData(response);
                     }

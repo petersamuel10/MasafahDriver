@@ -1,10 +1,13 @@
 package com.vavisa.masafahdriver.activities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class ShipmentModel {
+public class ShipmentModel implements Parcelable {
 
     @SerializedName("id")
     private String id;
@@ -28,6 +31,30 @@ public class ShipmentModel {
     private AddressModel address_from;
     @SerializedName("address_to")
     private AddressModel address_to;
+
+    protected ShipmentModel(Parcel in) {
+        id = in.readString();
+        price = in.readString();
+        user_id = in.readString();
+        byte tmpIs_today = in.readByte();
+        is_today = tmpIs_today == 0 ? null : tmpIs_today == 1;
+        pickup_time_from = in.readString();
+        pickup_time_to = in.readString();
+        status = in.readString();
+        payment_type = in.readString();
+    }
+
+    public static final Creator<ShipmentModel> CREATOR = new Creator<ShipmentModel>() {
+        @Override
+        public ShipmentModel createFromParcel(Parcel in) {
+            return new ShipmentModel(in);
+        }
+
+        @Override
+        public ShipmentModel[] newArray(int size) {
+            return new ShipmentModel[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -64,6 +91,23 @@ public class ShipmentModel {
     }
     public AddressModel getAddress_to() {
         return address_to;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(price);
+        dest.writeString(user_id);
+        dest.writeByte((byte) (is_today == null ? 0 : is_today ? 1 : 2));
+        dest.writeString(pickup_time_from);
+        dest.writeString(pickup_time_to);
+        dest.writeString(status);
+        dest.writeString(payment_type);
     }
 
     public class Items {
