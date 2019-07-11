@@ -134,7 +134,7 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -194,7 +194,7 @@
 
         </android.support.constraint.ConstraintLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/delivery_button_layout"
@@ -216,5 +216,27 @@
             android:background="@drawable/button_rounded_corners_primary_filled"
             android:textColor="@android:color/white" />
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/no_shipments_image"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="16dp"
+        android:tint="#A1A1A1"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_box" />
+
+    <TextView
+        android:id="@+id/no_shipments_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/no_shipments_image"
+        android:layout_centerHorizontal="true"
+        android:text="@string/no_shipments_message"
+        android:textColor="#A1A1A1"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
 </RelativeLayout>

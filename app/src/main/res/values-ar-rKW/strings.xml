@@ -76,4 +76,16 @@
     <string name="kd">دك</string>
     <string name="free_delevery">توصيل مجاني</string>
     <string name="add_successfully">تمت الاضاقة بنجاح</string>
+    <string name="add_custom_amount">اضافة كمية</string>
+    <string name="amount_in_kd">الكمية بالدينار</string>
+    <string name="cancel">الغاء</string>
+    <string name="please_enter_your_amount">الرجاء ادخال الكمية</string>
+    <string name="pick_time_from">وقت الشحن :</string>
+    <string name="pick_time_to">وقت الشحن الي :</string>
+    <string name="tel">ت :</string>
+    <string name="are_you_want_to_call">"هل تريد الاتصال ب "</string>
+    <string name="call">اتصال</string>
+    <string name="question_mark">؟</string>
+    <string name="today">اليوم</string>
+    <string name="to">"الي "</string>
 </resources>

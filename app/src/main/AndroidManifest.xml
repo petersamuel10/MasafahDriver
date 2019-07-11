@@ -44,7 +44,7 @@
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ShipmentDetailsActivity"
+            android:name=".tap_my_shipment.shipment_details.ShipmentDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".tap_profile.wallet.WalletActivity"

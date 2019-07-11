@@ -6,7 +6,7 @@
     android:background="@color/background">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/buy_points_toolbar"
+        android:id="@+id/wallet_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:theme="@style/ToolbarTheme"
@@ -38,7 +38,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buy_points_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/wallet_toolbar" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/balance_layer_"

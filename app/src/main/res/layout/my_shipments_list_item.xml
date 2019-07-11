@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_shipments_constraint_layout"
@@ -8,10 +9,9 @@
     android:background="@drawable/rounded_corners_white_filled"
     android:clipChildren="true">
 
-
     <View
         android:id="@+id/side_border"
-        android:layout_width="10dp"
+        android:layout_width="@dimen/_8sdp"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,9 +22,9 @@
         android:id="@+id/shipment_number_tag"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginLeft="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:text="@string/shipment_number"
         android:textColor="@android:color/black"
         android:textStyle="bold"
@@ -35,9 +35,9 @@
         android:id="@+id/shipment_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/_3sdp"
+        android:layout_marginLeft="@dimen/_3sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:text="122232"
         android:textColor="@android:color/black"
         android:textStyle="bold"
@@ -48,10 +48,9 @@
         android:id="@+id/shipment_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/test_description"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginLeft="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:textColor="#A1A1A1"
         app:layout_constraintStart_toEndOf="@+id/side_border"
         app:layout_constraintTop_toBottomOf="@+id/shipment_number_tag"
@@ -61,12 +60,12 @@
         android:id="@+id/light_divider"
         android:layout_width="0.1dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginLeft="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginEnd="@dimen/_6sdp"
+        android:layout_marginRight="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_22sdp"
         android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -92,10 +91,9 @@
         android:id="@+id/filled_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/light_divider"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_filled_circle" />
@@ -104,14 +102,11 @@
         android:id="@+id/empty_circle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/light_divider"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/drop_location_area"
         app:srcCompat="@drawable/ic_empty_circle" />
 
     <TextView
@@ -120,7 +115,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
@@ -128,51 +122,7 @@
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/empty_circle"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/location_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#E3EDFA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/drop_location_area"
-        app:layout_constraintStart_toEndOf="@+id/light_divider"
-        app:layout_constraintTop_toBottomOf="@+id/empty_circle"
-        app:srcCompat="@drawable/ic_location_on_primary_24dp" />
-
-    <TextView
-        android:id="@+id/distance_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:text="@string/distance"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/location_icon"
-        app:layout_constraintTop_toTopOf="@+id/location_icon" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="12 km"
-        android:textColor="@android:color/black"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/location_icon"
-        app:layout_constraintTop_toBottomOf="@+id/distance_tag" />
+        app:layout_constraintStart_toEndOf="@+id/empty_circle" />
 
     <View
         android:id="@+id/vertical_dotted_lines"
@@ -186,5 +136,33 @@
         app:layout_constraintEnd_toEndOf="@+id/filled_circle"
         app:layout_constraintStart_toStartOf="@+id/filled_circle"
         app:layout_constraintTop_toBottomOf="@+id/filled_circle" />
+
+    <TextView
+        android:id="@+id/pick_time_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="@string/pick_time_from"
+        app:layout_constraintStart_toStartOf="@+id/shipment_description"
+        app:layout_constraintTop_toBottomOf="@+id/shipment_description" />
+
+    <TextView
+        android:id="@+id/pick_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/shipment_description"
+        app:layout_constraintTop_toBottomOf="@+id/pick_time_tag" />
+
+    <ImageView
+        android:id="@+id/picked_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

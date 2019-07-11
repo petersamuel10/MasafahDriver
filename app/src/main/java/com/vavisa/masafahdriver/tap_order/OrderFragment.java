@@ -5,10 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,21 +22,24 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.PaymentResult;
+import com.vavisa.masafahdriver.activities.ShipmentModel;
 import com.vavisa.masafahdriver.basic.BaseFragment;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.vavisa.masafahdriver.activities.MainActivity.navigationView;
 
-public class OrderFragment extends BaseFragment {
+public class OrderFragment extends BaseFragment implements OrdersViews {
 
     private View fragment;
-    private RecyclerView myShipmentListView;
-    private List<OrderModel> orderList;
+    private RecyclerView order_rec;
+    private NestedScrollView scrollView;
     public RelativeLayout deliveryButtonLayout;
+    private ImageView noShipmentsImage;
+    private TextView noShipmentsMessage;
     public Button deliveryNow;
+    private OrderPresenter presenter;
 
     @Nullable
     @Override
@@ -48,56 +50,13 @@ public class OrderFragment extends BaseFragment {
 
         if (fragment == null) {
             fragment = inflater.inflate(R.layout.fragment_orders, container, false);
-            Toolbar toolbar = fragment.findViewById(R.id.orders_toolbar);
-            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            initViews();
 
-            getActivity().setTitle("");
+            presenter = new OrderPresenter();
+            presenter.attachView(this);
+            presenter.getShipment();
 
-            final ScrollView scrollView = fragment.findViewById(R.id.scrollView);
-            deliveryButtonLayout = fragment.findViewById(R.id.delivery_button_layout);
-            deliveryNow = deliveryButtonLayout.findViewById(R.id.deliver_now_button);
-
-            /*scrollView.post(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView.fullScroll(ScrollView.FOCUS_UP);
-                        }
-                    });*/
-
-            final ConstraintLayout locationLayout = fragment.findViewById(R.id.location_layout);
-
-            locationLayout.post(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            int height = locationLayout.getHeight();
-                            RelativeLayout.LayoutParams layoutParams =
-                                    (RelativeLayout.LayoutParams) locationLayout.getLayoutParams();
-                            layoutParams.topMargin = -(height / 2);
-                            locationLayout.setLayoutParams(layoutParams);
-                        }
-                    });
-
-
-            orderList = new ArrayList<>();
-
-            orderList.add(new OrderModel());
-            orderList.add(new OrderModel());
-            orderList.add(new OrderModel());
-
-            myShipmentListView = fragment.findViewById(R.id.my_shipment_list);
-            myShipmentListView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            myShipmentListView.setAdapter(new OrderAdapter(this, orderList));
-            myShipmentListView.addItemDecoration(new BottomSpaceItemDecoration(50));
-
-            deliveryNow.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    show_pay_dialog();
-                }
-            });
-
+            deliveryNow.setOnClickListener(v -> show_pay_dialog());
 
         } else {
             for (int i = 1; i < navigationView.getMenu().size(); i++) {
@@ -107,6 +66,32 @@ public class OrderFragment extends BaseFragment {
         }
 
         return fragment;
+    }
+
+    private void initViews() {
+
+        scrollView = fragment.findViewById(R.id.scrollView);
+        deliveryButtonLayout = fragment.findViewById(R.id.delivery_button_layout);
+        deliveryNow = deliveryButtonLayout.findViewById(R.id.deliver_now_button);
+        noShipmentsImage = fragment.findViewById(R.id.no_shipments_image);
+        noShipmentsMessage = fragment.findViewById(R.id.no_shipments_message);
+
+        scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_UP));
+
+        final ConstraintLayout locationLayout = fragment.findViewById(R.id.location_layout);
+
+        locationLayout.post(() -> {
+            int height = locationLayout.getHeight();
+            RelativeLayout.LayoutParams layoutParams =
+                    (RelativeLayout.LayoutParams) locationLayout.getLayoutParams();
+            layoutParams.topMargin = -(height / 2);
+            locationLayout.setLayoutParams(layoutParams);
+        });
+
+        order_rec = fragment.findViewById(R.id.my_shipment_list);
+        order_rec.setLayoutManager(new LinearLayoutManager(getActivity()));
+        order_rec.addItemDecoration(new BottomSpaceItemDecoration(50));
+
     }
 
     private void show_pay_dialog() {
@@ -148,4 +133,14 @@ public class OrderFragment extends BaseFragment {
         dialogPlus.show();
     }
 
+    @Override
+    public void displayShipment(ArrayList<ShipmentModel> orderList) {
+
+        if (orderList.size() == 0) {
+            noShipmentsMessage.setVisibility(View.VISIBLE);
+            noShipmentsImage.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
+        } else
+            order_rec.setAdapter(new OrderAdapter(this, orderList));
+    }
 }

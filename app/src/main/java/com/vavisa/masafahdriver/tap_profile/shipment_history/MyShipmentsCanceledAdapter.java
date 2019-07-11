@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.ShipmentDetailsActivity;
+import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmentDetailsActivity;
 
 public class MyShipmentsCanceledAdapter extends RecyclerView.Adapter<MyShipmentsCanceledAdapter.ViewHolder> {
 

@@ -1,6 +1,7 @@
-package com.vavisa.masafahdriver.tap_order;
+package com.vavisa.masafahdriver.tap_my_shipment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -10,24 +11,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.ShipmentModel;
+import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmentDetailsActivity;
+import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmmentUpdateCallback;
+import com.vavisa.masafahdriver.util.Constants;
 
 import java.util.ArrayList;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
+public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.ViewHolder> {
 
-    private ArrayList<ShipmentModel> orderList;
-    private int selectedCount = 0;
+    private ArrayList<ShipmentModel> myShipmentList;
     private Context context;
-    private OrderFragment orderFragment;
+    private ShipmmentUpdateCallback callback;
 
 
-    public OrderAdapter(OrderFragment orderFragment, ArrayList<ShipmentModel> orderList) {
-        this.orderFragment = orderFragment;
-        this.orderList = orderList;
+    public MyShipmentAdapter(ShipmmentUpdateCallback callback, ArrayList<ShipmentModel> myShipmentList) {
+        this.callback = callback;
+        this.myShipmentList = myShipmentList;
+
     }
 
     @NonNull
@@ -44,43 +49,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.bind(orderList.get(position));
-
-        final View itemView = holder.itemView;
-
-  /*      holder.itemView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        orderFragment.deliveryButtonLayout.setVisibility(View.VISIBLE);
-
-                        if (orderList.get(position).isSelected()) {
-                            itemView.setBackground(
-                                    context.getResources().getDrawable(R.drawable.rounded_corners_white_filled));
-                            orderList.get(position).setSelected(false);
-                            selectedCount--;
-                            orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
-
-                            if (selectedCount == 0) {
-                                isLongClick = false;
-                                orderFragment.deliveryButtonLayout.setVisibility(View.GONE);
-                            }
-                        } else {
-                            orderList.get(position).setSelected(true);
-                            selectedCount++;
-                            itemView.setBackground(
-                                    context.getResources().getDrawable(R.drawable.rounded_primary_border));
-
-                            orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
-                        }
-                    }
-                });*/
+        holder.bind(myShipmentList.get(position));
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ShipmentDetailsActivity.class);
+            intent.putExtra("shipment_id", myShipmentList.get(position).getId());
+            intent.putExtra("interface", callback);
+            context.startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return orderList.size();
+        return myShipmentList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -90,6 +70,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 pickup_location_txt,
                 drop_location_txt,
                 pick_time;
+        ImageView picked_img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +80,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             pickup_location_txt = itemView.findViewById(R.id.pickup_location);
             drop_location_txt = itemView.findViewById(R.id.drop_location_area);
             pick_time = itemView.findViewById(R.id.pick_time);
+            picked_img = itemView.findViewById(R.id.picked_img);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 itemView.setOutlineProvider(ViewOutlineProvider.BACKGROUND);
@@ -120,6 +102,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 pick_time.setText(shipmentModel.getPickup_time_from() + " " +
                         context.getString(R.string.to) + " " + shipmentModel.getPickup_time_to());
 
+            if (shipmentModel.getStatus().equals("3"))
+                picked_img.setImageResource((Constants.LANGUAGE.equals("en")) ? R.drawable.ic_picked_en : R.drawable.ic_picked_ar);
+
             StringBuilder item_str = new StringBuilder();
             for (ShipmentModel.Items item : shipmentModel.getItems()) {
                 item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
@@ -129,5 +114,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         }
     }
 
-}
+    public void updateShipmentItem(ShipmentModel shipmentModel) {
+        int index = myShipmentList.indexOf(shipmentModel);
+        shipmentModel.setStatus("3");
+        myShipmentList.set(index, shipmentModel);
+        notifyDataSetChanged();
+    }
 
+    public void removeShipmentItem(ShipmentModel shipmentModel) {
+        int index = myShipmentList.indexOf(shipmentModel);
+        myShipmentList.remove(shipmentModel);
+        notifyItemRemoved(index);
+    }
+
+}

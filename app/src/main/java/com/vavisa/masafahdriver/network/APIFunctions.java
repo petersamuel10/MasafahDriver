@@ -1,5 +1,6 @@
 package com.vavisa.masafahdriver.network;
 
+import com.vavisa.masafahdriver.activities.ShipmentModel;
 import com.vavisa.masafahdriver.login.CountryModel;
 import com.vavisa.masafahdriver.register.RegisterResponse;
 import com.vavisa.masafahdriver.register.UserModel;
@@ -17,6 +18,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface APIFunctions {
 
@@ -48,20 +50,31 @@ public interface APIFunctions {
     Call<HashMap<String,String>> addBalanceCall(@Header("Authorization") String Authorization, @Body AddBalanceModel addBalanceModel);
 
     @PUT("updateProfile")
-    Call<UserModel> updateProfileCall(@Header("Authorization") String authorization, @Body UserModel userModel);
+    Call<RegisterResponse> updateProfileCall(@Header("Authorization") String authorization, @Body UserModel userModel);
 
+    @GET("getShipmentHistory")
+    Call<ArrayList<ShipmentModel>> getShipmentHistoryCall(@Header("Authorization") String Authorization);
 
-//
+    @GET("getPendingShipments")
+    Call<ArrayList<ShipmentModel>> orderListCall(@Header("Authorization") String authorization);
+
+    @GET("getMyShipments")
+    Call<ArrayList<ShipmentModel>> getMyShipmentCall(@Header("Authorization") String authorization);
+
+    @GET("getShipmentById/{shipment_id}")
+    Call<ShipmentModel> shipmentDetailsCall(@Header("Authorization") String Authorization, @Path("shipment_id") String shipment_id);
+
+    @GET("markShipmentAsPicked/{shipment_id}")
+    Call<HashMap<String,String>> markAsPickupCall(@Header("Authorization") String Authorization, @Path("shipment_id") String shipment_id);
+
+    @GET("markShipmentAsDelivered/{shipment_id}")
+    Call<HashMap<String,String>> markAsDeliveryCall(@Header("Authorization") String Authorization, @Path("shipment_id") String shipment_id);
+
 //    @POST("public/api/user/verifyOTP")
 //    Call<VerifyResponseModel> verifyOtpCall(@Body Login login);
 //
 //    @POST("public/api/user/resendOTP")
 //    Call<LoginResponse> resendOtpCall(@Body Login login);
-//
-
-//
-//    @GET("public/api/user/getShipments")
-//    Call<HashMap<String,ArrayList<ShipmentModel>>> getShipmentCall(@Header("Authorization") String authorization);
 //
 //    @GET("public/api/user/getCategories")
 //    Call<ArrayList<CategoryModel>> getCategoriesCall(@Header("Authorization") String authorization);
@@ -77,8 +90,6 @@ public interface APIFunctions {
 //
 //    @PATCH("public/api/user/updateMobileNumber")
 //    Call<VerifyResponseModel> updateMobileNumberCall(@Header("Authorization") String Authorization,@Body Login login);
-//
-
 //
 //    @POST("public/api/user/addAddress")
 //    Call<AddressModel> addAddressCall(@Header("Authorization") String Authorization, @Body AddressModel addressModel);

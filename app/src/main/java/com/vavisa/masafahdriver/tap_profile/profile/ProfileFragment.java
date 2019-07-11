@@ -12,6 +12,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -160,7 +161,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                         country_id);
                 presenter.updateProfileDetails(user);
                 KeyboardUtil.hideKeyboard(getContext(), update_btn);
-                my_details_dialog.dismiss();
             }
         });
         country_code_btn.setOnClickListener(v -> countryCodeAlert(country_code_btn));
@@ -296,8 +296,10 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void displayProfileDetails(UserModel user) {
-        this.user = user;
+        if (my_details_dialog != null && my_details_dialog.isShowing())
+            my_details_dialog.dismiss();
 
+        this.user = user;
         user_name.setText(user.getName());
         user_email.setText(user.getEmail());
 
@@ -378,13 +380,11 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                                     break;
                                 case 2:
                                     fragment = new ShipmentHistoryFragment();
-                                    switchFragment(
-                                            getActivity().getSupportFragmentManager(), fragment, "shipmentHistory");
+                                    switchFragment(fragment);
                                     break;
                                 case 3:
                                     fragment = new TermsAndConditions();
-                                    switchFragment(
-                                            getActivity().getSupportFragmentManager(), fragment, "termsAndCondition");
+                                    switchFragment(fragment);
                                     break;
 
                                 case 4:
@@ -454,5 +454,13 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         public void setName(String name) {
             this.name = name;
         }
+    }
+
+    private void switchFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction =
+                getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

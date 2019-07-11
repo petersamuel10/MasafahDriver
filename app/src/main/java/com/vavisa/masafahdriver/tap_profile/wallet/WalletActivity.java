@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.basic.BaseActivity;
 import com.vavisa.masafahdriver.tap_profile.wallet.BalanceOffers.BalanceOffersActivity;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
-
-import java.text.DecimalFormat;
 
 public class WalletActivity extends BaseActivity implements WalletViews {
 
@@ -32,7 +31,6 @@ public class WalletActivity extends BaseActivity implements WalletViews {
 
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -42,6 +40,12 @@ public class WalletActivity extends BaseActivity implements WalletViews {
     }
 
     private void initViews() {
+
+        Toolbar toolbar = findViewById(R.id.wallet_toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         wallet_rec = findViewById(R.id.buy_points_list);
         add_balance_btn = findViewById(R.id.add_balance_tag);
@@ -58,13 +62,19 @@ public class WalletActivity extends BaseActivity implements WalletViews {
     @Override
     public void DisplayWalletDetails(WalletModel walletModel) {
 
-        balance_txt.setText(String.format("%.3f",Float.valueOf(walletModel.getWallet_balance()))+" " + getString(R.string.kd));
+        balance_txt.setText(String.format("%.3f", Float.valueOf(walletModel.getWallet_balance())) + " " + getString(R.string.kd));
         free_delivery_txt.setText(walletModel.getFree_deliveries() + " " + getString(R.string.free_delevery));
 
         adapter = new WalletAdapter(walletModel.getTransactionDetails());
 
         wallet_rec.setAdapter(adapter);
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 
     /* private class BuyPointViewHolder extends RecyclerView.ViewHolder {

@@ -81,4 +81,16 @@
     <string name="kd">KD</string>
     <string name="free_delevery">Free delivery(s)</string>
     <string name="add_successfully">Add successfully.</string>
+    <string name="add_custom_amount">Add your amount</string>
+    <string name="amount_in_kd">Amount in KD</string>
+    <string name="cancel">Cancel</string>
+    <string name="please_enter_your_amount">Please enter your amount</string>
+    <string name="pick_time_from">Pickup time :</string>
+    <string name="pick_time_to">Pick time to :</string>
+    <string name="tel">Tel :</string>
+    <string name="are_you_want_to_call">Are you want to call</string>
+    <string name="question_mark">\?</string>
+    <string name="call">Call</string>
+    <string name="today">Today</string>
+    <string name="to">To</string>
 </resources>

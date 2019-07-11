@@ -10,6 +10,7 @@ import com.vavisa.masafahdriver.basic.BaseApplication;
 import com.vavisa.masafahdriver.basic.BasePresenter;
 import com.vavisa.masafahdriver.login.CountryModel;
 import com.vavisa.masafahdriver.network.APIManager;
+import com.vavisa.masafahdriver.register.RegisterResponse;
 import com.vavisa.masafahdriver.register.UserModel;
 import com.vavisa.masafahdriver.util.Preferences;
 
@@ -52,18 +53,18 @@ public class ProfilePresenter extends BasePresenter<ProfileViews> {
 
         getView().showProgress();
         APIManager.getInstance().getAPI().updateProfileCall(Preferences.getInstance().getString("access_token"),userModel)
-                .enqueue(new Callback<UserModel>() {
+                .enqueue(new Callback<RegisterResponse>() {
                     @Override
-                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                    public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                         getView().hideProgress();
                         if (response.code() == 200)
-                            getView().displayProfileDetails(response.body());
+                            getView().displayProfileDetails(response.body().getUser());
                         else
                             getView().showMissingData(response);
                     }
 
                     @Override
-                    public void onFailure(Call<UserModel> call, Throwable t) {
+                    public void onFailure(Call<RegisterResponse> call, Throwable t) {
                         getView().hideProgress();
                         getView().showMessage(BaseApplication.error_msg);
                     }

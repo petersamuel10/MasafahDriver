@@ -8,12 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.basic.BaseActivity;
+import com.vavisa.masafahdriver.tap_my_shipment.MyShipmentsFragment;
 import com.vavisa.masafahdriver.tap_order.OrderFragment;
 import com.vavisa.masafahdriver.tap_profile.profile.ProfileFragment;
-import com.vavisa.masafahdriver.tap_shipment.MyShipmentsFragment;
-
-import static com.vavisa.masafahdriver.util.FragmentUtil.getFragmentBackStackEntryAt;
-import static com.vavisa.masafahdriver.util.FragmentUtil.switchFragment;
 
 public class MainActivity extends BaseActivity {
     public static BottomNavigationView navigationView;
@@ -125,7 +122,6 @@ public class MainActivity extends BaseActivity {
         }
         return -1;
     }
-
 
     @Override
     public void onBackPressed() {

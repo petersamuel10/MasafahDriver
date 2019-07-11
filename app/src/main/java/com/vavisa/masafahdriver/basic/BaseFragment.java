@@ -35,7 +35,7 @@ public class BaseFragment extends Fragment implements BaseView {
             FragmentManager fragmentManager, Fragment fragment, String fragmentName) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment, fragmentName);
-        fragmentTransaction.addToBackStack(fragmentName);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 

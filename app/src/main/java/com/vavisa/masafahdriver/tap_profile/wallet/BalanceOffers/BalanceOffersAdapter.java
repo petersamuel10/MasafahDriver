@@ -1,5 +1,6 @@
 package com.vavisa.masafahdriver.tap_profile.wallet.BalanceOffers;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
@@ -26,13 +28,15 @@ public class BalanceOffersAdapter extends RecyclerView.Adapter<BalanceOffersAdap
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_balance, parent, false);
         context = parent.getContext();
 
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
@@ -48,7 +52,6 @@ public class BalanceOffersAdapter extends RecyclerView.Adapter<BalanceOffersAdap
             selectedPackage = balanceList.get(position);
             notifyDataSetChanged();
         });
-
     }
 
     @Override
@@ -56,7 +59,9 @@ public class BalanceOffersAdapter extends RecyclerView.Adapter<BalanceOffersAdap
         return balanceList.size();
     }
 
+
     public BalanceOfferModel getSelectedPackage() {
+
         return selectedPackage;
     }
 
@@ -64,6 +69,7 @@ public class BalanceOffersAdapter extends RecyclerView.Adapter<BalanceOffersAdap
 
         ConstraintLayout balance_layer;
         TextView amount, offer;
+        EditText custom_amount_ed;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,12 +77,12 @@ public class BalanceOffersAdapter extends RecyclerView.Adapter<BalanceOffersAdap
             balance_layer = itemView.findViewById(R.id.balance_layer);
             amount = itemView.findViewById(R.id.amount);
             offer = itemView.findViewById(R.id.offer);
+            custom_amount_ed = itemView.findViewById(R.id.custom_amount_ed);
         }
-
 
         private void bind(BalanceOfferModel balance) {
 
-            amount.setText(String.format("%.3f",Float.valueOf(balance.getAmount())) + " " + context.getString(R.string.kd));
+            amount.setText(String.format("%.3f", Float.valueOf(balance.getAmount())) + " " + context.getString(R.string.kd));
             offer.setText(balance.getFree_deliveries() + " " + context.getString(R.string.free_delevery));
         }
     }
