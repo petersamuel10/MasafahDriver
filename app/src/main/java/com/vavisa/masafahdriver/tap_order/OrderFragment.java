@@ -28,8 +28,6 @@ import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
 
-import static com.vavisa.masafahdriver.activities.MainActivity.navigationView;
-
 public class OrderFragment extends BaseFragment implements OrdersViews {
 
     private View fragment;
@@ -57,12 +55,6 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
             presenter.getShipment();
 
             deliveryNow.setOnClickListener(v -> show_pay_dialog());
-
-        } else {
-            for (int i = 1; i < navigationView.getMenu().size(); i++) {
-                navigationView.getMenu().getItem(i).setChecked(false);
-            }
-            navigationView.getMenu().getItem(0).setChecked(true);
         }
 
         return fragment;

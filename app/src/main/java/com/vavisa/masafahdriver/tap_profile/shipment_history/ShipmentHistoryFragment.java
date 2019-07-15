@@ -18,7 +18,6 @@ import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
 
-import static com.vavisa.masafahdriver.activities.MainActivity.navigationView;
 
 public class ShipmentHistoryFragment extends BaseFragment implements ShipmentHistoryViews {
 
@@ -49,11 +48,6 @@ public class ShipmentHistoryFragment extends BaseFragment implements ShipmentHis
             presenter.attachView(this);
             presenter.getShipment();
 
-        } else {
-            for (int i = 1; i < navigationView.getMenu().size(); i++) {
-                navigationView.getMenu().getItem(i).setChecked(false);
-            }
-            navigationView.getMenu().getItem(1).setChecked(true);
         }
 
         return fragment;

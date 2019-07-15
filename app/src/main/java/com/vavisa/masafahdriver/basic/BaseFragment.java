@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,24 +27,6 @@ public class BaseFragment extends Fragment implements BaseView {
             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_base, container, false);
         return v;
-    }
-
-    public void switchFragment(
-            FragmentManager fragmentManager, Fragment fragment, String fragmentName) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment, fragmentName);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
-
-    public int getFragmentBackStackEntryAt(
-            FragmentManager fragmentManager, String fragmentTagName) {
-        for (int entry = 0; entry < fragmentManager.getBackStackEntryCount(); entry++) {
-            if (fragmentTagName.equals(fragmentManager.getBackStackEntryAt(entry).getName())) {
-                return entry;
-            }
-        }
-        return -1;
     }
 
     @Override

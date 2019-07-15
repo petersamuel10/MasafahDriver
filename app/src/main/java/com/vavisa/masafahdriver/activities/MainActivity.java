@@ -11,9 +11,17 @@ import com.vavisa.masafahdriver.basic.BaseActivity;
 import com.vavisa.masafahdriver.tap_my_shipment.MyShipmentsFragment;
 import com.vavisa.masafahdriver.tap_order.OrderFragment;
 import com.vavisa.masafahdriver.tap_profile.profile.ProfileFragment;
+import com.vavisa.masafahdriver.util.Constants;
+
+import java.util.HashMap;
+import java.util.Stack;
 
 public class MainActivity extends BaseActivity {
-    public static BottomNavigationView navigationView;
+
+    private BottomNavigationView navigationView;
+    private HashMap<String, Stack<Fragment>> mStack;
+    private String mCurrentTab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,117 +29,118 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         navigationView = findViewById(R.id.bottom_navigation);
-
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Fragment orderFragment = new OrderFragment();
-        switchFragment(orderFragment, "orders");
+        mStack = new HashMap<String, Stack<Fragment>>();
+        mStack.put(Constants.TAB_ORDER, new Stack<Fragment>());
+        mStack.put(Constants.TAB_SHIPMENT, new Stack<Fragment>());
+        mStack.put(Constants.TAB_PROFILE, new Stack<Fragment>());
+
+        navigationView.setSelectedItemId(R.id.navigation_orders);
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
-            menuItem -> {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = menuItem -> {
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_orders:
+                selectTab(Constants.TAB_ORDER);
+                return true;
+            case R.id.navigation_my_shipments:
+                selectTab(Constants.TAB_SHIPMENT);
+                return true;
+            case R.id.navigation_profile:
+                selectTab(Constants.TAB_PROFILE);
+                return true;
+        }
+        return false;
+    };
 
-                Fragment fragment = null;
+    private void selectTab(String tabId) {
 
-                int backStackEntryAt;
+        // if press twice in the same tab
+        if (mCurrentTab == tabId) {
 
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_orders:
-                        backStackEntryAt = getFragmentBackStackEntryAt("orders");
+            Fragment fragment = mStack.get(mCurrentTab).elementAt(0);
+            mStack.get(tabId).clear();
+            pushFragments(tabId, fragment, true);
 
-                        if (backStackEntryAt >= 0) {
-                            getSupportFragmentManager()
-                                    .popBackStack(backStackEntryAt + 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                        } else {
-                            if (!"orders"
-                                    .equals(
-                                            getSupportFragmentManager()
-                                                    .getBackStackEntryAt(
-                                                            getSupportFragmentManager().getBackStackEntryCount() - 1)
-                                                    .getName())) {
+        } else {
+            mCurrentTab = tabId;
 
-                                getSupportFragmentManager()
-                                        .popBackStack(2, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                fragment = new OrderFragment();
-                                switchFragment(fragment, "orders");
-                            }
-                        }
-                        return true;
+            if (mStack.get(tabId).size() == 0) {
 
-                    case R.id.navigation_my_shipments:
-                        backStackEntryAt =
-                                getFragmentBackStackEntryAt("myShipments");
+                /*
+                 *    First time this tab is selected. So add first fragment of that tab.
+                 *    Dont need animation, so that argument is false.
+                 *    We are adding a new fragment which is not present in stack. So add to stack is true.
+                 */
 
-                        if (backStackEntryAt > 0) {
-                            getSupportFragmentManager()
-                                    .popBackStack(backStackEntryAt + 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                        } else {
-                            if (!"myShipments"
-                                    .equals(
-                                            getSupportFragmentManager()
-                                                    .getBackStackEntryAt(
-                                                            getSupportFragmentManager().getBackStackEntryCount() - 1)
-                                                    .getName())) {
-
-                                getSupportFragmentManager()
-                                        .popBackStack(2, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                                fragment = new MyShipmentsFragment();
-                                switchFragment(fragment, "myShipments");
-                            }
-                        }
-                        return true;
-
-                    case R.id.navigation_profile:
-                        backStackEntryAt =
-                                getFragmentBackStackEntryAt("profile");
-
-                        if (backStackEntryAt > 0) {
-                            getSupportFragmentManager()
-                                    .popBackStack(backStackEntryAt + 1, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                        } else {
-                            if (!"profile"
-                                    .equals(
-                                            getSupportFragmentManager()
-                                                    .getBackStackEntryAt(
-                                                            getSupportFragmentManager().getBackStackEntryCount() - 1)
-                                                    .getName())) {
-                                fragment = new ProfileFragment();
-                                switchFragment(fragment, "profile");
-                            }
-                        }
-
-                        return true;
+                switch (tabId) {
+                    case "tab_order":
+                        pushFragments(tabId, new OrderFragment(), true);
+                        break;
+                    case "tab_shipment":
+                        pushFragments(tabId, new MyShipmentsFragment(), true);
+                        break;
+                    case "tab_profile":
+                        pushFragments(tabId, new ProfileFragment(), true);
+                        break;
                 }
 
-                return false;
-            };
+            } else {
 
-    private void switchFragment(Fragment fragment, String fragmentName) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment, fragmentName);
-        fragmentTransaction.addToBackStack(fragmentName);
-        fragmentTransaction.commit();
-    }
 
-    private int getFragmentBackStackEntryAt(String fragmentTagName) {
-        for (int entry = 0; entry < getSupportFragmentManager().getBackStackEntryCount(); entry++) {
-            if (fragmentTagName.equals(
-                    getSupportFragmentManager().getBackStackEntryAt(entry).getName())) {
-                return entry;
+                //   We are switching tabs, and target tab is already has atleast one fragment.
+                //    No need of animation, no need of stack pushing. Just show the target fragment
+
+                pushFragments(tabId, mStack.get(tabId).lastElement(), false);
             }
         }
-        return -1;
+    }
+
+    public void pushFragments(String tag, Fragment fragment, boolean shouldAdd) {
+        if (shouldAdd)
+            mStack.get(tag).push(fragment);
+
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.replace(R.id.main_layout_content, fragment);
+        ft.commit();
+    }
+
+    private void popFragments() {
+        /*
+         *    Select the second last fragment in current tab's stack..
+         *    which will be shown after the fragment transaction given below
+         */
+
+        Fragment fragment = mStack.get(mCurrentTab).elementAt(mStack.get(mCurrentTab).size() - 2);
+
+        /*pop current fragment from stack.. */
+        mStack.get(mCurrentTab).pop();
+
+        /* We have the target fragment in hand.. Just show it.. Show a standard navigation animation*/
+
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.replace(R.id.main_layout_content, fragment);
+        ft.commit();
+
     }
 
     @Override
     public void onBackPressed() {
 
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            finish();
-        }
-
-        // super.onBackPressed();
+        if (mStack.get(mCurrentTab).size() == 1) {
+            if (mCurrentTab == Constants.TAB_ORDER) {
+                // We are already showing first fragment of current tab, so when back pressed, we will finish this activity..
+                finish();
+                return;
+            } else {
+                navigationView.setSelectedItemId(R.id.home);
+            }
+        } else
+            // Goto previous fragment in navigation stack of this tab
+            popFragments();
     }
 }

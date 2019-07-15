@@ -20,7 +20,6 @@ import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vavisa.masafahdriver.activities.MainActivity.navigationView;
 
 public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews {
 
@@ -51,11 +50,6 @@ public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews
             presenter.attachView(this);
             presenter.getMyShipment();
 
-        } else {
-            for (int i = 1; i < navigationView.getMenu().size(); i++) {
-                navigationView.getMenu().getItem(i).setChecked(false);
-            }
-            navigationView.getMenu().getItem(0).setChecked(true);
         }
 
         return fragment;

@@ -9,13 +9,13 @@ import com.vavisa.masafahdriver.R;
 
 public class FragmentUtil {
 
-    public static void switchFragment(
+   /* public static void switchFragment(
             FragmentManager fragmentManager, Fragment fragment, String fragmentName) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment, fragmentName);
         fragmentTransaction.addToBackStack(fragmentName);
         fragmentTransaction.commit();
-    }
+    }*/
 
     public static int getFragmentBackStackEntryAt(
             FragmentManager fragmentManager, String fragmentTagName) {

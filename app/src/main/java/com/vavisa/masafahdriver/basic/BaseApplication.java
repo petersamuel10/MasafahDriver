@@ -22,7 +22,6 @@ public class BaseApplication extends Application {
         error_msg = context.getString(R.string.error_occurred);
         setupOnSignal();
     }
-
     private void setupOnSignal() {
         OneSignal.startInit(this)
                 // .setNotificationOpenedHandler(new MyNotificationOpenedHandler())
@@ -42,7 +41,6 @@ public class BaseApplication extends Application {
                     }
                 });
     }
-
     public static void preventAccess() {
         Preferences.getInstance().remove("access_token");
         Preferences.getInstance().remove("user_id");

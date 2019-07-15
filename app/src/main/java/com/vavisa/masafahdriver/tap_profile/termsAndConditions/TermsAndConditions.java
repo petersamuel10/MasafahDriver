@@ -29,7 +29,7 @@ public class TermsAndConditions extends BaseFragment implements Terms {
         presenter = new TermsPresenter();
         presenter.attachView(this);
 
-        presenter.getTerms();
+        // presenter.getTerms();
         return view;
     }
 

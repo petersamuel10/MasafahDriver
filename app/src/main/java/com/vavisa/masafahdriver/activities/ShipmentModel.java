@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class ShipmentModel implements Parcelable {
 
+    private boolean isSelected;
+
     @SerializedName("id")
     private String id;
     @SerializedName("price")
@@ -55,6 +57,13 @@ public class ShipmentModel implements Parcelable {
             return new ShipmentModel[size];
         }
     };
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getId() {
         return id;

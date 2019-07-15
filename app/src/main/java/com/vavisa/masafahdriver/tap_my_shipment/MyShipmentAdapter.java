@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
+import com.vavisa.masafahdriver.activities.MainActivity;
 import com.vavisa.masafahdriver.activities.ShipmentModel;
 import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmentDetailsFragment;
 import com.vavisa.masafahdriver.util.Constants;
@@ -29,12 +30,10 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
     private ArrayList<ShipmentModel> myShipmentList;
     private Context context;
     private FragmentActivity activity;
-    private MyShipmentsFragment myShipmentsFragment;
 
     public MyShipmentAdapter(ArrayList<ShipmentModel> myShipmentList, FragmentActivity activity, MyShipmentsFragment myShipmentsFragment) {
         this.myShipmentList = myShipmentList;
         this.activity = activity;
-        this.myShipmentsFragment = myShipmentsFragment;
     }
 
     @NonNull
@@ -57,14 +56,9 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
             Bundle bundle = new Bundle();
             bundle.putString("shipment_id", myShipmentList.get(position).getId());
             Fragment fragment = new ShipmentDetailsFragment();
-            fragment.setTargetFragment(myShipmentsFragment, 101);
             fragment.setArguments(bundle);
 
-            FragmentTransaction fragmentTransaction =
-                    activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.frame_layout, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            ((MainActivity)activity).pushFragments(Constants.TAB_SHIPMENT,fragment,true);
 
         });
     }

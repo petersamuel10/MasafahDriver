@@ -48,34 +48,29 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         final View itemView = holder.itemView;
 
-  /*      holder.itemView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+        holder.itemView.setOnClickListener(
+                v -> {
+                    orderFragment.deliveryButtonLayout.setVisibility(View.VISIBLE);
 
-                        orderFragment.deliveryButtonLayout.setVisibility(View.VISIBLE);
+                    if (orderList.get(position).isSelected()) {
+                        itemView.setBackground(
+                                context.getResources().getDrawable(R.drawable.rounded_corners_white_filled));
+                        orderList.get(position).setSelected(false);
+                        selectedCount--;
+                        orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
 
-                        if (orderList.get(position).isSelected()) {
-                            itemView.setBackground(
-                                    context.getResources().getDrawable(R.drawable.rounded_corners_white_filled));
-                            orderList.get(position).setSelected(false);
-                            selectedCount--;
-                            orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
-
-                            if (selectedCount == 0) {
-                                isLongClick = false;
-                                orderFragment.deliveryButtonLayout.setVisibility(View.GONE);
-                            }
-                        } else {
-                            orderList.get(position).setSelected(true);
-                            selectedCount++;
-                            itemView.setBackground(
-                                    context.getResources().getDrawable(R.drawable.rounded_primary_border));
-
-                            orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
+                        if (selectedCount == 0) {
+                            orderFragment.deliveryButtonLayout.setVisibility(View.GONE);
                         }
+                    } else {
+                        orderList.get(position).setSelected(true);
+                        selectedCount++;
+                        itemView.setBackground(
+                                context.getResources().getDrawable(R.drawable.rounded_primary_border));
+
+                        orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
                     }
-                });*/
+                });
     }
 
     @Override

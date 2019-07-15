@@ -12,7 +12,6 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -33,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 import com.vavisa.masafahdriver.R;
+import com.vavisa.masafahdriver.activities.MainActivity;
 import com.vavisa.masafahdriver.basic.BaseFragment;
 import com.vavisa.masafahdriver.login.CountryModel;
 import com.vavisa.masafahdriver.login.LoginActivity;
@@ -53,7 +53,6 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vavisa.masafahdriver.activities.MainActivity.navigationView;
 
 public class ProfileFragment extends BaseFragment implements View.OnClickListener, ProfileViews {
 
@@ -69,7 +68,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private ArrayList<CountryModel> countriesList;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
     private int country_id = 1;
-    private String country_code, edited_mobile_number;
     private DialogPlus my_details_dialog;
 
     @Nullable
@@ -88,11 +86,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             presenter.getProfileDetails();
 
 
-        } else {
-            for (int i = 1; i < navigationView.getMenu().size(); i++) {
-                navigationView.getMenu().getItem(i).setChecked(false);
-            }
-            navigationView.getMenu().getItem(1).setChecked(true);
         }
 
         setupProfileItems();
@@ -365,32 +358,28 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             final int position = profileViewHolder.getAdapterPosition();
 
             profileViewHolder.itemView.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    v -> {
+                        Fragment fragment = null;
+                        switch (position) {
+                            case 0:
+                                presenter.getCountries();
+                                updateDialog();
+                                break;
+                            case 1:
+                                changeLanguagePopMenu();
+                                break;
+                            case 2:
+                                fragment = new ShipmentHistoryFragment();
+                                ((MainActivity) getActivity()).pushFragments(Constants.TAB_PROFILE, fragment, true);
+                                break;
+                            case 3:
+                                fragment = new TermsAndConditions();
+                                ((MainActivity) getActivity()).pushFragments(Constants.TAB_PROFILE, fragment, true);
+                                break;
 
-                            Fragment fragment = null;
-                            switch (position) {
-                                case 0:
-                                    presenter.getCountries();
-                                    updateDialog();
-                                    break;
-                                case 1:
-                                    changeLanguagePopMenu();
-                                    break;
-                                case 2:
-                                    fragment = new ShipmentHistoryFragment();
-                                    switchFragment(fragment);
-                                    break;
-                                case 3:
-                                    fragment = new TermsAndConditions();
-                                    switchFragment(fragment);
-                                    break;
-
-                                case 4:
-                                    startActivity(new Intent(getActivity(), WalletActivity.class));
-                                    break;
-                            }
+                            case 4:
+                                startActivity(new Intent(getActivity(), WalletActivity.class));
+                                break;
                         }
                     });
         }
@@ -454,13 +443,5 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         public void setName(String name) {
             this.name = name;
         }
-    }
-
-    private void switchFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction =
-                getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
     }
 }
