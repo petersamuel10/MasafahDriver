@@ -133,18 +133,22 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         EditText email_ed = (EditText) my_details_dialog.findViewById(R.id.email);
         EditText phone_ed = (EditText) my_details_dialog.findViewById(R.id.phone);
         Button country_code_btn = (Button) my_details_dialog.findViewById(R.id.country_code);
+        try {
 
-        fullName_ed.setText(user.getName());
-        email_ed.setText(user.getEmail());
-        phone_ed.setText(user.getMobile());
-        country_code_btn.setText(user.getCountryModel().getCountry_code());
-        Glide.with(this)
-                .load(user.getImage())
-                .centerCrop()
-                .placeholder(R.drawable.ic_account_circle)
-                .error(R.drawable.ic_account_circle)
-                .into(user_image_update);
+            fullName_ed.setText(user.getName());
+            email_ed.setText(user.getEmail());
+            phone_ed.setText(user.getMobile());
+            country_code_btn.setText(user.getCountryModel().getCountry_code());
+            country_id = user.getCountryModel().getId();
 
+            Glide.with(this)
+                    .load(user.getImage())
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_account_circle)
+                    .error(R.drawable.ic_account_circle)
+                    .into(user_image_update);
+        } catch (Exception e) {
+        }
         update_btn.setOnClickListener(v -> {
             if (validate(fullName_ed, email_ed, phone_ed)) {
                 UserModel user = new UserModel(fullName_ed.getText().toString(),

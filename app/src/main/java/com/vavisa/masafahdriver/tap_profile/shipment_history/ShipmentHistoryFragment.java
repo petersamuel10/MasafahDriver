@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.ShipmentModel;
+import com.vavisa.masafahdriver.common_model.ShipmentModel;
 import com.vavisa.masafahdriver.basic.BaseFragment;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 

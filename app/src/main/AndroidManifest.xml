@@ -5,19 +5,27 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".basic.BaseApplication"
         android:allowBackup="true"
-
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".basic.BaseApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".tap_profile.wallet.BalanceOffers.BalanceOffersActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".tap_order.filterCities.FilterCityActivity"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert"/>
         <activity
-            android:name=".activities.PaymentResult"
+            android:name=".tap_order.invoice.payment_page.PaymentPage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tap_order.invoice.InvoiceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tap_profile.wallet.BalanceOffers.BalanceOffersActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".tap_order.invoice.payment_page.PaymentResult"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".register.RegisterActivity"
@@ -40,19 +48,12 @@
             android:name=".login.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".verify.VerifyYourNumberActivity"
-            android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".tap_my_shipment.shipment_details.ShipmentDetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".tap_profile.wallet.WalletActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="54cc6074b05a01d36002627727aa0c29a5022a6c" />
     </application>
-
 
 </manifest>

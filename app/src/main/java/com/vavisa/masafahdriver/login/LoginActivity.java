@@ -69,11 +69,7 @@ public class LoginActivity extends BaseActivity implements LoginViews {
         Preferences.getInstance().putString("access_token", loginResponse.getAccess_token());
         Preferences.getInstance().putString("use_id", loginResponse.getUser().getId());
 
-        if (getIntent().getExtras().containsKey("update_mobile"))
-            onBackPressed();
-        else
-            start(MainActivity.class);
-
+        start(MainActivity.class);
 
     }
 }

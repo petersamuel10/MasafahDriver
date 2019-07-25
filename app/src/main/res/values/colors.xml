@@ -8,4 +8,5 @@
     <color name="defaultText">#808080</color>
     <color name="green">#00B32C</color>
     <color name="grey">#E5E5E5</color>
+    <color name="greyDark">#CACACA</color>
 </resources>

@@ -5,6 +5,7 @@ import com.vavisa.masafahdriver.basic.BasePresenter;
 import com.vavisa.masafahdriver.network.APIManager;
 import com.vavisa.masafahdriver.register.RegisterResponse;
 import com.vavisa.masafahdriver.register.UserModel;
+import com.vavisa.masafahdriver.util.Connectivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,23 +15,26 @@ public class LoginPresenter extends BasePresenter<LoginViews> {
 
     public void login(UserModel userModel) {
 
-        getView().showProgress();
-        APIManager.getInstance().getAPI().loginCall(userModel).enqueue(new Callback<RegisterResponse>() {
-            @Override
-            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                getView().hideProgress();
-                if (response.code() == 200)
-                    getView().handleLogin(response.body());
-                else
-                    getView().showMissingData(response);
-            }
+        if (Connectivity.checkInternetConnection()) {
+            getView().showProgress();
+            APIManager.getInstance().getAPI().loginCall(userModel).enqueue(new Callback<RegisterResponse>() {
+                @Override
+                public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                    getView().hideProgress();
+                    if (response.code() == 200)
+                        getView().handleLogin(response.body());
+                    else
+                        getView().showMissingData(response);
+                }
 
-            @Override
-            public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                getView().hideProgress();
-                getView().showMessage(BaseApplication.error_msg);
-            }
-        });
+                @Override
+                public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                    getView().hideProgress();
+                    getView().showMessage(BaseApplication.error_msg);
+                }
+            });
+        } else
+            getView().showErrorConnection();
 
     }
 }

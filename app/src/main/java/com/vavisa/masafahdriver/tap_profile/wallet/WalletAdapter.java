@@ -1,6 +1,7 @@
 package com.vavisa.masafahdriver.tap_profile.wallet;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,8 +61,12 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
                 order_id_tag.setVisibility(View.GONE);
                 order_id.setVisibility(View.GONE);
                 amount.setText("+ " + String.format("%.3f", Float.valueOf(transaction.getAmount())) + " " + context.getString(R.string.kd));
-            } else
+            } else {
+                order_id_tag.setVisibility(View.VISIBLE);
+                order_id.setVisibility(View.VISIBLE);
+                amount.setTextColor(Color.parseColor("#ffcc0000"));
                 amount.setText("- " + String.format("%.3f", Float.valueOf(transaction.getAmount())) + " " + context.getString(R.string.kd));
+            }
 
             date.setText(transaction.getCreated_at());
             order_id.setText(transaction.getOrder_id());

@@ -1,9 +1,11 @@
 package com.vavisa.masafahdriver.network;
 
-import com.vavisa.masafahdriver.activities.ShipmentModel;
+import com.vavisa.masafahdriver.common_model.ShipmentModel;
 import com.vavisa.masafahdriver.login.CountryModel;
 import com.vavisa.masafahdriver.register.RegisterResponse;
 import com.vavisa.masafahdriver.register.UserModel;
+import com.vavisa.masafahdriver.tap_order.invoice.PaidModel;
+import com.vavisa.masafahdriver.tap_order.invoice.InvoiceModel;
 import com.vavisa.masafahdriver.tap_profile.termsAndConditions.TermsModel;
 import com.vavisa.masafahdriver.tap_profile.wallet.BalanceOffers.AddBalanceModel;
 import com.vavisa.masafahdriver.tap_profile.wallet.BalanceOffers.BalanceOfferModel;
@@ -11,6 +13,7 @@ import com.vavisa.masafahdriver.tap_profile.wallet.WalletModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -19,6 +22,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIFunctions {
 
@@ -56,7 +60,10 @@ public interface APIFunctions {
     Call<ArrayList<ShipmentModel>> getShipmentHistoryCall(@Header("Authorization") String Authorization);
 
     @GET("getPendingShipments")
-    Call<ArrayList<ShipmentModel>> orderListCall(@Header("Authorization") String authorization);
+    Call<ArrayList<ShipmentModel>> orderListCall(@Header("Authorization") String authorization, @Query("from_id") String from_id, @Query("to_id") String to_id);
+
+    @GET("getMyCities")
+    Call<ArrayList<CountryModel>> myCitiesCall(@Header("Authorization") String authorization);
 
     @GET("getMyShipments")
     Call<ArrayList<ShipmentModel>> getMyShipmentCall(@Header("Authorization") String authorization);
@@ -69,6 +76,13 @@ public interface APIFunctions {
 
     @GET("markShipmentAsDelivered/{shipment_id}")
     Call<HashMap<String,String>> markAsDeliveryCall(@Header("Authorization") String Authorization, @Path("shipment_id") String shipment_id);
+
+    @POST("acceptShipments")
+    Call<InvoiceModel> acceptShipmentCall(@Header("Authorization") String Authorization, @Body HashMap<String, List<String>> shipment_ids);
+
+    @GET("payOrder/{order_id}")
+    Call<PaidModel> payOrderCall(@Header("Authorization") String Authorization, @Path("order_id") String order_id);
+
 
 //    @POST("public/api/user/verifyOTP")
 //    Call<VerifyResponseModel> verifyOtpCall(@Body Login login);

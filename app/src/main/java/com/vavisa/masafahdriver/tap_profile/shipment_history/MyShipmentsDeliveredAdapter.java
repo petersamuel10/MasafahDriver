@@ -11,7 +11,8 @@ import android.view.ViewOutlineProvider;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.ShipmentModel;
+import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.ShipmentModel;
 
 import java.util.ArrayList;
 
@@ -71,11 +72,11 @@ public class MyShipmentsDeliveredAdapter extends RecyclerView.Adapter<MyShipment
         public void bind(ShipmentModel shipmentModel) {
 
             shipment_number_txt.setText(shipmentModel.getId());
-            pickup_location_txt.setText(shipmentModel.getAddress_from().getArea());
-            drop_location_txt.setText(shipmentModel.getAddress_to().getArea());
+            pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
+            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
 
             StringBuilder item_str = new StringBuilder();
-            for (ShipmentModel.Items item : shipmentModel.getItems()) {
+            for (Items item : shipmentModel.getItems()) {
                 item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
             }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -26,7 +25,6 @@
             android:textStyle="bold" />
 
     </android.support.v7.widget.Toolbar>
-
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/location_layout"
@@ -63,7 +61,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="14dp"
-            android:text="From"
+            android:text="@string/from"
             android:textColor="#a1a1a1"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/location_icon1"
@@ -75,13 +73,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
-            android:text="Salmiya"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toEndOf="@+id/location_icon1"
             app:layout_constraintTop_toBottomOf="@+id/from_tag" />
 
         <ImageView
-            android:id="@+id/sort_icon"
+            android:id="@+id/ic_swap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -94,7 +91,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_sort" />
+            app:srcCompat="@drawable/ic_swap" />
 
         <ImageView
             android:id="@+id/location_icon2"
@@ -115,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="To"
+            android:text="@string/to"
             android:textColor="#a1a1a1"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="@+id/to_location_name"
@@ -125,17 +122,15 @@
             android:id="@+id/to_location_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:text="Jahra"
+            android:layout_marginEnd="32dp"
             android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/to_tag" />
 
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sw"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/delivery_button_layout"
@@ -148,53 +143,97 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/list_of_orders_tag"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/list_of_orders"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/message_select_multiple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:text="@string/multiple_selection_message"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/list_of_orders_tag" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/my_shipment_list"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/message_select_multiple" />
+                android:layout_height="0dp">
 
-        </android.support.constraint.ConstraintLayout>
+                <TextView
+                    android:id="@+id/list_of_orders_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/list_of_orders"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.v4.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/message_select_multiple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:text="@string/multiple_selection_message"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/list_of_orders_tag" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/my_shipment_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/message_select_multiple" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/no_shipments_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/orders_toolbar"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/no_shipments_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:tint="#A1A1A1"
+            app:srcCompat="@drawable/ic_box" />
+
+        <TextView
+            android:id="@+id/no_shipments_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/no_shipments_image"
+            android:text="@string/no_shipments_message"
+            android:textColor="#A1A1A1"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/delivery_button_layout"
@@ -216,27 +255,5 @@
             android:background="@drawable/button_rounded_corners_primary_filled"
             android:textColor="@android:color/white" />
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/no_shipments_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp"
-        android:tint="#A1A1A1"
-        android:visibility="gone"
-        app:srcCompat="@drawable/ic_box" />
-
-    <TextView
-        android:id="@+id/no_shipments_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/no_shipments_image"
-        android:layout_centerHorizontal="true"
-        android:text="@string/no_shipments_message"
-        android:textColor="#A1A1A1"
-        android:textStyle="bold"
-        android:visibility="gone" />
 
 </RelativeLayout>

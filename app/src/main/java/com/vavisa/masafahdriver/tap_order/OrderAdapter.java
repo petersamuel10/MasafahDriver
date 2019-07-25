@@ -13,13 +13,14 @@ import android.view.ViewOutlineProvider;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.ShipmentModel;
+import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.ShipmentModel;
 
 import java.util.ArrayList;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
-    private ArrayList<ShipmentModel> orderList;
+    private ArrayList<ShipmentModel> orderList, selectedShipment;
     private int selectedCount = 0;
     private Context context;
     private OrderFragment orderFragment;
@@ -28,6 +29,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public OrderAdapter(OrderFragment orderFragment, ArrayList<ShipmentModel> orderList) {
         this.orderFragment = orderFragment;
         this.orderList = orderList;
+        selectedShipment = new ArrayList<>();
     }
 
     @NonNull
@@ -56,6 +58,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         itemView.setBackground(
                                 context.getResources().getDrawable(R.drawable.rounded_corners_white_filled));
                         orderList.get(position).setSelected(false);
+                        selectedShipment.remove(orderList.get(position));
                         selectedCount--;
                         orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
 
@@ -64,11 +67,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         }
                     } else {
                         orderList.get(position).setSelected(true);
+                        selectedShipment.add(orderList.get(position));
                         selectedCount++;
                         itemView.setBackground(
                                 context.getResources().getDrawable(R.drawable.rounded_primary_border));
 
-                        orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
+                        orderFragment.deliveryNow.setText(context.getString(R.string.delivery_now).concat(String.valueOf(selectedCount)).concat(")"));
                     }
                 });
     }
@@ -104,8 +108,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         public void bind(ShipmentModel shipmentModel) {
 
             shipment_number_txt.setText(shipmentModel.getId());
-            pickup_location_txt.setText(shipmentModel.getAddress_from().getArea());
-            drop_location_txt.setText(shipmentModel.getAddress_to().getArea());
+            pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
+            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
 
             if (shipmentModel.getIs_today()) {
                 pick_time.setText(context.getString(R.string.today));
@@ -116,12 +120,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         context.getString(R.string.to) + " " + shipmentModel.getPickup_time_to());
 
             StringBuilder item_str = new StringBuilder();
-            for (ShipmentModel.Items item : shipmentModel.getItems()) {
+            for (Items item : shipmentModel.getItems()) {
                 item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
             }
 
             shipment_content_txt.setText(item_str.toString());
         }
+    }
+
+    public ArrayList<ShipmentModel> getSelectedShipment (){
+        return selectedShipment;
     }
 
 }

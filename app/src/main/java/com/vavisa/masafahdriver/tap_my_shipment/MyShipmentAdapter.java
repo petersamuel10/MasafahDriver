@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,8 @@ import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.MainActivity;
-import com.vavisa.masafahdriver.activities.ShipmentModel;
+import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.ShipmentModel;
 import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmentDetailsFragment;
 import com.vavisa.masafahdriver.util.Constants;
 
@@ -30,10 +30,12 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
     private ArrayList<ShipmentModel> myShipmentList;
     private Context context;
     private FragmentActivity activity;
+    private MyShipmentsFragment myShipmentsFragment;
 
     public MyShipmentAdapter(ArrayList<ShipmentModel> myShipmentList, FragmentActivity activity, MyShipmentsFragment myShipmentsFragment) {
         this.myShipmentList = myShipmentList;
         this.activity = activity;
+        this.myShipmentsFragment = myShipmentsFragment;
     }
 
     @NonNull
@@ -56,6 +58,7 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
             Bundle bundle = new Bundle();
             bundle.putString("shipment_id", myShipmentList.get(position).getId());
             Fragment fragment = new ShipmentDetailsFragment();
+            fragment.setTargetFragment(myShipmentsFragment,101);
             fragment.setArguments(bundle);
 
             ((MainActivity)activity).pushFragments(Constants.TAB_SHIPMENT,fragment,true);
@@ -96,8 +99,8 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
         public void bind(ShipmentModel shipmentModel) {
 
             shipment_number_txt.setText(shipmentModel.getId());
-            pickup_location_txt.setText(shipmentModel.getAddress_from().getArea());
-            drop_location_txt.setText(shipmentModel.getAddress_to().getArea());
+            pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
+            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
 
             if (shipmentModel.getIs_today()) {
                 pick_time.setText(context.getString(R.string.today));
@@ -111,7 +114,7 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
                 picked_img.setImageResource((Constants.LANGUAGE.equals("en")) ? R.drawable.ic_picked_en : R.drawable.ic_picked_ar);
 
             StringBuilder item_str = new StringBuilder();
-            for (ShipmentModel.Items item : shipmentModel.getItems()) {
+            for (Items item : shipmentModel.getItems()) {
                 item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
             }
 

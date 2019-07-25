@@ -2,19 +2,18 @@ package com.vavisa.masafahdriver.tap_my_shipment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.ShipmentModel;
 import com.vavisa.masafahdriver.basic.BaseFragment;
+import com.vavisa.masafahdriver.common_model.ShipmentModel;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews
 
     private transient View fragment;
     private transient RecyclerView myShipment_rec;
-    private transient NestedScrollView scrollView;
+    private transient SwipeRefreshLayout sw;
     private transient ImageView noShipmentsImage;
     private transient TextView noShipmentsMessage;
     private transient MyShipmentPresenter presenter;
@@ -37,18 +36,24 @@ public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews
         if (fragment == null) {
             fragment = inflater.inflate(R.layout.fragment_my_shipments, container, false);
 
-            scrollView = fragment.findViewById(R.id.scrollView);
+            sw = fragment.findViewById(R.id.sw);
+            sw.setColorSchemeResources(R.color.colorPrimary);
             myShipment_rec = fragment.findViewById(R.id.my_shipment_list);
             noShipmentsImage = fragment.findViewById(R.id.no_shipments_image);
             noShipmentsMessage = fragment.findViewById(R.id.no_shipments_message);
 
             myShipment_rec.setLayoutManager(new LinearLayoutManager(getActivity()));
             myShipment_rec.addItemDecoration(new BottomSpaceItemDecoration(50));
-            scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_UP));
+            //   scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_UP));
 
             presenter = new MyShipmentPresenter();
             presenter.attachView(this);
             presenter.getMyShipment();
+
+            sw.setOnRefreshListener(() -> {
+                sw.setRefreshing(false);
+                presenter.getMyShipment();
+            });
 
         }
 
@@ -61,7 +66,7 @@ public class MyShipmentsFragment extends BaseFragment implements MyShipmentViews
         if (myShipmentList.size() == 0) {
             noShipmentsMessage.setVisibility(View.VISIBLE);
             noShipmentsImage.setVisibility(View.VISIBLE);
-            scrollView.setVisibility(View.GONE);
+            sw.setVisibility(View.GONE);
         } else {
             adapter = new MyShipmentAdapter(myShipmentList, getActivity(), this);
             myShipment_rec.setAdapter(adapter);

@@ -15,11 +15,9 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.MainActivity;
 import com.vavisa.masafahdriver.basic.BaseActivity;
 import com.vavisa.masafahdriver.login.CountryModel;
 import com.vavisa.masafahdriver.login.LoginActivity;
-import com.vavisa.masafahdriver.util.Preferences;
 
 import java.io.IOException;
 import java.util.ArrayList;

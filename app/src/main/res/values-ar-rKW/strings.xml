@@ -88,4 +88,19 @@
     <string name="question_mark">؟</string>
     <string name="today">اليوم</string>
     <string name="to">"الي "</string>
+    <string name="invoice">فاتورة</string>
+    <string name="free_deliver_used">الشحن المجاني المستخدم :</string>
+    <string name="pay_by_card">الدفع بالكارت :</string>
+    <string name="total_amount">كمية الدفع :</string>
+    <string name="total_pay_by_card">كمية الدفع بالكارت (</string>
+    <string name="total_shipment">كمية الشحن :</string>
+    <string name="wallet_amount_used">كمية المحفظة المستخدمة :</string>
+    <string name="confirm">تأكيد</string>
+    <string name="select_payment_method">أختر طريقة الدفع :</string>
+    <string name="redirect_to_payment">إعادة التوجيه إلى الدفع</string>
+    <string name="all">الكل</string>
+    <string name="select_city">اختر المدينة</string>
+    <string name="from">من</string>
+    <string name="delivery_now">التوصيل الان (</string>
+    <string name="search">بحث</string>
 </resources>

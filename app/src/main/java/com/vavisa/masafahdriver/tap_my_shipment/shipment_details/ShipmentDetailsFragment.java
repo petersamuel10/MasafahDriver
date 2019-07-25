@@ -2,11 +2,14 @@ package com.vavisa.masafahdriver.tap_my_shipment.shipment_details;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +18,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
-import com.vavisa.masafahdriver.activities.ShipmentModel;
 import com.vavisa.masafahdriver.basic.BaseFragment;
+import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.ShipmentModel;
 
 public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDetailsViews {
 
     private ScrollView scrollView;
-    private View view;
     private TextView shipment_description,
             pickup_location, pickup_block_street, pickup_building, pickup_mobile,
             drop_location, drop_block_street, drop_building, drop_mobile,
@@ -71,6 +74,29 @@ public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDet
                 presenter.deliveredShipment(shipment_id);
         });
 
+        pickup_mobile.setOnClickListener(v -> showCallAlert(pickup_mobile_str));
+        drop_mobile.setOnClickListener(v -> showCallAlert(drop_mobile_str));
+
+    }
+
+    private void showCallAlert(String mobile_str) {
+
+        AlertDialog.Builder callAlert = new AlertDialog.Builder(getContext());
+        callAlert.setTitle(R.string.call);
+        callAlert.setMessage(getString(R.string.are_you_want_to_call) + " " + mobile_str + " " + getString(R.string.question_mark));
+
+        callAlert.setPositiveButton(R.string.call, (dialog, which) -> {
+            boolean call = getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
+            if (call) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + mobile_str));
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        callAlert.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
+
+        callAlert.create().show();
     }
 
     @Override
@@ -80,22 +106,22 @@ public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDet
 
         scrollView.setVisibility(View.VISIBLE);
         StringBuilder item_str = new StringBuilder();
-        for (ShipmentModel.Items item : shipmentModel.getItems()) {
+        for (Items item : shipmentModel.getItems()) {
             item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
         }
 
         shipment_description.setText(item_str.toString());
-        pickup_location.setText(shipmentModel.getAddress_from().getArea());
-        pickup_block_street.setText(shipmentModel.getAddress_from().getBlock() + " - "
-                + shipmentModel.getAddress_from().getStreet());
-        pickup_building.setText(shipmentModel.getAddress_from().getBuilding() + " - ");
+        pickup_location.setText(shipmentModel.getAddress_from().getCity().getName());
+        pickup_block_street.setText(shipmentModel.getAddress_from().getBlock().concat(" - ")
+                .concat(shipmentModel.getAddress_from().getStreet()));
+        pickup_building.setText(shipmentModel.getAddress_from().getBuilding().concat(" - "));
         pickup_mobile.setText(shipmentModel.getAddress_from().getMobile());
         pickup_mobile_str = shipmentModel.getAddress_from().getMobile();
 
-        drop_location.setText(shipmentModel.getAddress_to().getArea());
-        drop_block_street.setText(shipmentModel.getAddress_to().getBlock() + " - "
-                + shipmentModel.getAddress_from().getStreet());
-        drop_building.setText(shipmentModel.getAddress_to().getBuilding() + " - ");
+        drop_location.setText(shipmentModel.getAddress_to().getCity().getName());
+        drop_block_street.setText(shipmentModel.getAddress_to().getBlock().concat(" - ")
+                .concat(shipmentModel.getAddress_from().getStreet()));
+        drop_building.setText(shipmentModel.getAddress_to().getBuilding().concat(" - "));
         drop_mobile.setText(shipmentModel.getAddress_to().getMobile());
         drop_mobile_str = shipmentModel.getAddress_to().getMobile();
 
@@ -104,8 +130,9 @@ public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDet
             time_from_txt.setTextColor(Color.parseColor("#3F82DC"));
             time_from_txt.setTypeface(Typeface.DEFAULT_BOLD);
         } else
-            time_from_txt.setText(shipmentModel.getPickup_time_from() + " " + getString(R.string.to) + " " + shipmentModel.getPickup_time_to());
-        total_txt.setText(shipmentModel.getPrice() + " " + getString(R.string.kd));
+            time_from_txt.setText(shipmentModel.getPickup_time_from().concat(" ").concat(getString(R.string.to)).concat(" ")
+                    .concat(shipmentModel.getPickup_time_to()));
+        total_txt.setText(shipmentModel.getPrice().concat(" ").concat(getString(R.string.kd)));
 
         if (shipmentModel.getStatus().equals("3"))
             pickup_btn.setText(getString(R.string.delivered));
