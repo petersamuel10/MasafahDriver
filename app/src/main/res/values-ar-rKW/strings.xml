@@ -103,4 +103,7 @@
     <string name="from">من</string>
     <string name="delivery_now">التوصيل الان (</string>
     <string name="search">بحث</string>
+    <string name="transaction_successful">تمت عملية الدفع بنجاح</string>
+    <string name="transaction_failed">فشلت عملة الدفع</string>
+    <string name="ok">موافق</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.vavisa.masafahdriver.tap_profile.wallet.BalanceOffers;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,10 +16,11 @@ import android.widget.Toast;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.basic.BaseActivity;
+import com.vavisa.masafahdriver.tap_order.invoice.PaidModel;
+import com.vavisa.masafahdriver.tap_order.invoice.payment_page.PaymentPage;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BalanceOffersActivity extends BaseActivity implements BalanceOffersViews {
 
@@ -63,19 +66,17 @@ public class BalanceOffersActivity extends BaseActivity implements BalanceOffers
         dialog.setTitle(R.string.add_custom_amount);
 
         EditText amount_ed = view.findViewById(R.id.custom_amount_ed);
-
         dialog.setPositiveButton(R.string.add, (dialog12, which) -> {
 
             if (TextUtils.isEmpty(amount_ed.getText().toString()))
                 Toast.makeText(BalanceOffersActivity.this, R.string.please_enter_your_amount, Toast.LENGTH_SHORT).show();
             else {
+                dialog12.dismiss();
                 presenter.addToWallet(new AddBalanceModel("", amount_ed.getText().toString(), false));
             }
 
         });
-
         dialog.setNegativeButton(R.string.cancel, (dialog1, which) -> dialog1.dismiss());
-
         dialog.create().show();
     }
 
@@ -87,9 +88,30 @@ public class BalanceOffersActivity extends BaseActivity implements BalanceOffers
     }
 
     @Override
-    public void addBalanceRes(HashMap<String, String> result) {
-        Toast.makeText(this, getString(R.string.add_successfully), Toast.LENGTH_SHORT).show();
-        onBackPressed();
+    public void addBalanceRes(PaidModel paidModel) {
+
+        String[] paymentMethodItems = new String[paidModel.getPaymentMethod().size()];
+        for (int i = 0; i < paidModel.getPaymentMethod().size(); i++) {
+            paymentMethodItems[i] = paidModel.getPaymentMethod().get(i).getPaymentMethodName();
+        }
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.select_payment_method);
+
+        alert.setSingleChoiceItems(paymentMethodItems, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int position) {
+                Intent intent = new Intent(BalanceOffersActivity.this, PaymentPage.class);
+                intent.putExtra("payment_url", paidModel.getPaymentMethod().get(position).getPaymentMethodUrl());
+                intent.putExtra("isAddBalance", true);
+                startActivity(intent);
+            }
+        });
+
+        alert.create().show();
+
+      /*  Toast.makeText(this, getString(R.string.add_successfully), Toast.LENGTH_SHORT).show();
+        onBackPressed();*/
     }
 
     @Override

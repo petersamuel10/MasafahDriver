@@ -50,8 +50,7 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
     private OrderPresenter presenter;
     private OrderAdapter adapter;
     private String from_id = null, to_id = null;
-    private ArrayList<CountryModel> allCitiesList, cityNameList;
-    private int from_selected_pos, to_selected_pos;
+    private ArrayList<CountryModel> allCitiesList;
     private EditText search_ed;
     private ImageView ic_clear;
     private RadioGroup cities_rg;
@@ -74,12 +73,14 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
 
             ic_swap.setOnClickListener(v -> {
                 try {
-                    if (!from_id.equals(to_id)) {
-                        String temp_str = from_id;
+                    if (!(from_location_name.getText().toString()).equals(to_location_name.getText().toString())) {
+                        String temp_id = from_id;
                         from_id = to_id;
-                        to_id = temp_str;
-                        from_location_name.setText(cityNameList.get(from_selected_pos).getName());
-                        to_location_name.setText(cityNameList.get(to_selected_pos).getName());
+                        to_id = temp_id;
+
+                        String temp_str = from_location_name.getText().toString();
+                        from_location_name.setText(to_location_name.getText());
+                        to_location_name.setText(temp_str);
                         presenter.getShipment(from_id, to_id);
                     }
                 } catch (Exception e) {
@@ -101,8 +102,8 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
                 presenter.getShipment(from_id, to_id);
             });
 
-            from_location_name.setOnClickListener(v -> showCityAlert(true, to_selected_pos));
-            to_location_name.setOnClickListener(v -> showCityAlert(false, to_selected_pos));
+            from_location_name.setOnClickListener(v -> showCityAlert(true, (from_id == null) ? 0 : Integer.valueOf(from_id)));
+            to_location_name.setOnClickListener(v -> showCityAlert(false, (to_id == null) ? 0 : Integer.valueOf(to_id)));
 
         }
 
@@ -121,6 +122,7 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
         ic_clear = view.findViewById(R.id.ic_clear);
         cities_rg = view.findViewById(R.id.cities_rg);
         getListOfCities(allCitiesList);
+        cities_rg.check(selectedPosition);
 
         AlertDialog alertDialog = alert.create();
 
@@ -132,7 +134,7 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                cityNameList = new ArrayList<>();
+                ArrayList<CountryModel> cityNameList = new ArrayList<>();
                 for (CountryModel city : allCitiesList) {
                     if (city.getName().toLowerCase().startsWith(String.valueOf(s)))
                         cityNameList.add(city);
@@ -145,48 +147,24 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
 
             }
         });
-
         ic_clear.setOnClickListener(v -> {
             search_ed.setText("");
             cities_rg.removeAllViews();
             getListOfCities(allCitiesList);
         });
-
         cities_rg.setOnCheckedChangeListener((group, checkedId) -> {
             RadioButton radioButton = group.findViewById(checkedId);
             if (isFrom) {
-                from_id = (checkedId == 0)? null:String.valueOf(checkedId);
+                from_id = (checkedId == 0) ? null : String.valueOf(checkedId);
                 from_location_name.setText(radioButton.getText());
             } else {
-                to_id = (checkedId == 0)? null:String.valueOf(checkedId);
+                to_id = (checkedId == 0) ? null : String.valueOf(checkedId);
                 to_location_name.setText(radioButton.getText());
             }
-            presenter.getShipment(from_id,to_id);
+            presenter.getShipment(from_id, to_id);
             alertDialog.dismiss();
         });
-
         alertDialog.show();
-
-        /*alert.setSingleChoiceItems(this.cityNameList, selectedPosition, (dialog, position) -> {
-            dialog.dismiss();
-            if (isFrom) {
-                if (position == 0)
-                    from_id = null;
-                else
-                    from_id = String.valueOf(citiesList.get(position - 1).getId());
-                from_location_name.setText(this.cityNameList[position]);
-                from_selected_pos = position;
-            } else {
-                if (position == 0)
-                    to_id = null;
-                else
-                    to_id = String.valueOf(citiesList.get(position - 1).getId());
-                to_location_name.setText(this.cityNameList[position]);
-                to_selected_pos = position;
-            }
-            presenter.getShipment(from_id, to_id);
-        });*/
-
 
     }
 
@@ -261,7 +239,6 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
     public void displayMyCities(ArrayList<CountryModel> citiesList) {
         citiesList.add(0, new CountryModel(0, getString(R.string.all)));
         this.allCitiesList = citiesList;
-        this.cityNameList = citiesList;
         from_location_name.setText(citiesList.get(0).getName());
         to_location_name.setText(citiesList.get(0).getName());
     }

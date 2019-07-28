@@ -23,16 +23,14 @@ import java.util.ArrayList;
 public class InvoiceActivity extends BaseActivity implements InvoiceViews {
 
     private RecyclerView shipment_rec;
+    private Button pay_btn;
+    String total_amount, free_delivery_amount, wallet_amount, card_amount;
+    private InvoicePresenter presenter;
+    private InvoiceModel paymentModel;
     private TextView total_amount_txt, total_shipment_txt,
             free_delivery_tag, free_delivery_txt,
             wallet_amount_tag, wallet_amount_txt,
             pay_card_tag, pay_card_txt;
-
-    private Button pay_btn;
-    String total_amount, free_delivery_amount, wallet_amount, card_amount;
-
-    private InvoicePresenter presenter;
-    private InvoiceModel paymentModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +122,7 @@ public class InvoiceActivity extends BaseActivity implements InvoiceViews {
                     dialog.dismiss();
                     Intent intent = new Intent(InvoiceActivity.this, PaymentPage.class);
                     intent.putExtra("payment_url", paidModel.getPaymentMethod().get(position).getPaymentMethodUrl());
+                    intent.putExtra("isAddBalance",false);
                     startActivity(intent);
                 }
             });

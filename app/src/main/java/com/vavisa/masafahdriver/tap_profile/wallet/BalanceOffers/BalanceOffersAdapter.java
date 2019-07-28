@@ -59,7 +59,6 @@ public class BalanceOffersAdapter extends RecyclerView.Adapter<BalanceOffersAdap
         return balanceList.size();
     }
 
-
     public BalanceOfferModel getSelectedPackage() {
 
         return selectedPackage;

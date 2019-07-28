@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddBalanceModel {
 
-    @SerializedName("wallet_id")
+    @SerializedName("offer_id")
     private String wallet_id;
     @SerializedName("amount")
     private String amount;

@@ -12,6 +12,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -57,6 +58,7 @@ import static android.app.Activity.RESULT_OK;
 public class ProfileFragment extends BaseFragment implements View.OnClickListener, ProfileViews {
 
     private View fragment;
+    private SwipeRefreshLayout sw;
     private CircleImageView user_image, user_image_update;
     private TextView user_name, user_email;
     private RecyclerView profileGridView;
@@ -84,15 +86,28 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             presenter = new ProfilePresenter();
             presenter.attachView(this);
             presenter.getProfileDetails();
-
-
         }
-
+        sw.setOnRefreshListener(() -> {
+            sw.setRefreshing(false);
+            presenter.getProfileDetails();
+        });
         setupProfileItems();
-
         profileGridView.setAdapter(new ProfileAdapter());
-
         return fragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        try {
+            Glide.with(this)
+                    .load(user.getImage())
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_account_circle)
+                    .error(R.drawable.ic_account_circle)
+                    .into(user_image);
+        } catch (Exception e) {
+        }
     }
 
     private void changeLanguagePopMenu() {
@@ -258,6 +273,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         getActivity().setTitle("");
 
+        sw = fragment.findViewById(R.id.sw);
+        sw.setColorSchemeResources(R.color.colorPrimary);
         profileLayout = fragment.findViewById(R.id.profile_layout);
         profileGridView = fragment.findViewById(R.id.profile_items);
         logout = fragment.findViewById(R.id.logout_button);
