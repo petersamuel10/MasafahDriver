@@ -64,10 +64,10 @@ public class OrderPresenter extends BasePresenter<OrdersViews> {
                 });
     }
 
-    public void acceptShipment(HashMap<String, List<String>> shipmentIds) {
+    public void acceptShipment(AcceptOrderModel acceptOrderModel) {
         if (Connectivity.checkInternetConnection()) {
             getView().showProgress();
-            APIManager.getInstance().getAPI().acceptShipmentCall(Preferences.getInstance().getString("access_token"), shipmentIds)
+            APIManager.getInstance().getAPI().acceptShipmentCall(Preferences.getInstance().getString("access_token"), acceptOrderModel)
                     .enqueue(new Callback<InvoiceModel>() {
                         @Override
                         public void onResponse(Call<InvoiceModel> call, Response<InvoiceModel> response) {

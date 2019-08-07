@@ -4,6 +4,7 @@ import com.vavisa.masafahdriver.common_model.ShipmentModel;
 import com.vavisa.masafahdriver.login.CountryModel;
 import com.vavisa.masafahdriver.register.RegisterResponse;
 import com.vavisa.masafahdriver.register.UserModel;
+import com.vavisa.masafahdriver.tap_order.AcceptOrderModel;
 import com.vavisa.masafahdriver.tap_order.invoice.InvoiceModel;
 import com.vavisa.masafahdriver.tap_order.invoice.PaidModel;
 import com.vavisa.masafahdriver.tap_profile.termsAndConditions.TermsModel;
@@ -17,6 +18,8 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -34,6 +37,10 @@ public interface APIFunctions {
 
     @POST("login")
     Call<RegisterResponse> loginCall(@Body UserModel login);
+
+    @FormUrlEncoded
+    @POST("forgotPassword")
+    Call<HashMap<String, String>> forgotPasswordCall(@Field("email") String email);
 
     @GET("getProfile")
     Call<UserModel> getProfileCall(@Header("Authorization") String authorization);
@@ -78,7 +85,7 @@ public interface APIFunctions {
     Call<HashMap<String, String>> markAsDeliveryCall(@Header("Authorization") String Authorization, @Path("shipment_id") String shipment_id);
 
     @POST("acceptShipments")
-    Call<InvoiceModel> acceptShipmentCall(@Header("Authorization") String Authorization, @Body HashMap<String, List<String>> shipment_ids);
+    Call<InvoiceModel> acceptShipmentCall(@Header("Authorization") String Authorization, @Body AcceptOrderModel acceptOrderModel);
 
     @GET("payOrder/{order_id}")
     Call<PaidModel> payOrderCall(@Header("Authorization") String Authorization, @Path("order_id") String order_id);

@@ -43,7 +43,7 @@
     <string name="pay_online">الدفع اون لاين</string>
     <string name="pay_by_wallet">الدفع عن طريق المحفظة</string>
     <string name="or">أو</string>
-    <string name="use_free_delivery">استخدام توصيل مجاني</string>
+    <string name="use_free_delivery">استخدام التوصيل مجاني</string>
     <string name="thank_you">شكراً لك</string>
     <string name="your_payment_submitted">تم الدفع . يمكنك الان مشاهده التفاصيل .</string>
     <string name="wallet">محفظة</string>
@@ -106,4 +106,6 @@
     <string name="transaction_successful">تمت عملية الدفع بنجاح</string>
     <string name="transaction_failed">فشلت عملة الدفع</string>
     <string name="ok">موافق</string>
+    <string name="forgot_password">نسيت كلمة المرور</string>
+    <string name="reset">إعاده تعيين</string>
 </resources>

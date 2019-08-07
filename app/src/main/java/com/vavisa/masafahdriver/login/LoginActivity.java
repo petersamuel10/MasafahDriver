@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.MainActivity;
 import com.vavisa.masafahdriver.basic.BaseActivity;
+import com.vavisa.masafahdriver.forgot_password.ForgotPasswordActivity;
 import com.vavisa.masafahdriver.register.RegisterActivity;
 import com.vavisa.masafahdriver.register.RegisterResponse;
 import com.vavisa.masafahdriver.register.UserModel;
@@ -20,8 +21,7 @@ import com.vavisa.masafahdriver.util.Preferences;
 public class LoginActivity extends BaseActivity implements LoginViews {
 
     private TextInputEditText email_ed, password_ed;
-    private TextView create_new_account;
-
+    private TextView create_new_account, forgot_password;
     private String email_str, password_str;
 
     @Override
@@ -32,6 +32,7 @@ public class LoginActivity extends BaseActivity implements LoginViews {
         Button continueButton = findViewById(R.id.continue_buton);
         email_ed = findViewById(R.id.email_ed);
         password_ed = findViewById(R.id.password_ed);
+        forgot_password = findViewById(R.id.forgot_password);
         create_new_account = findViewById(R.id.create_new_account);
 
         LoginPresenter presenter = new LoginPresenter();
@@ -41,20 +42,20 @@ public class LoginActivity extends BaseActivity implements LoginViews {
             if (isValid())
                 presenter.login(new UserModel(email_str, password_str, Constants.oneSignalToken, 2));
         });
-
+        forgot_password.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class)));
         create_new_account.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
     }
 
     private boolean isValid() {
 
         if (TextUtils.isEmpty(email_ed.getText())) {
-            showMessage(getString(R.string.please_enter_name));
+            showMessage(getString(R.string.please_enter_valid_email));
             return false;
         } else
             email_str = email_ed.getText().toString();
 
         if (TextUtils.isEmpty(password_ed.getText())) {
-            showMessage(getString(R.string.please_enter_name));
+            showMessage(getString(R.string.please_enter_password));
             return false;
         } else
             password_str = password_ed.getText().toString();

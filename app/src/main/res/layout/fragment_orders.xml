@@ -254,6 +254,14 @@
             android:layout_marginRight="8dp"
             android:background="@drawable/button_rounded_corners_primary_filled"
             android:textColor="@android:color/white" />
+
+        <CheckBox
+            android:id="@+id/use_free_delivery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_free_delivery"
+            android:layout_below="@+id/deliver_now_button"
+            android:layout_marginTop="4dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

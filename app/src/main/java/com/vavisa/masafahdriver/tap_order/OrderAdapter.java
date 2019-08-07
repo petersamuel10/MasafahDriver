@@ -60,7 +60,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         orderList.get(position).setSelected(false);
                         selectedShipment.remove(orderList.get(position));
                         selectedCount--;
-                        orderFragment.deliveryNow.setText("Delivery now (" + selectedCount + ")");
+                        orderFragment.deliveryNow.setText(context.getString(R.string.accepted).concat("(").concat(String.valueOf(selectedCount)).concat(")"));
 
                         if (selectedCount == 0) {
                             orderFragment.deliveryButtonLayout.setVisibility(View.GONE);
@@ -72,7 +72,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         itemView.setBackground(
                                 context.getResources().getDrawable(R.drawable.rounded_primary_border));
 
-                        orderFragment.deliveryNow.setText(context.getString(R.string.delivery_now).concat(String.valueOf(selectedCount)).concat(")"));
+                        orderFragment.deliveryNow.setText(context.getString(R.string.accepted).concat("(").concat(String.valueOf(selectedCount)).concat(")"));
                     }
                 });
     }

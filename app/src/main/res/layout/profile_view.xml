@@ -109,6 +109,7 @@
         android:drawablePadding="4dp"
         android:gravity="start|center_vertical"
         android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

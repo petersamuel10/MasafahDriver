@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -34,7 +35,6 @@ import com.vavisa.masafahdriver.tap_order.invoice.InvoiceModel;
 import com.vavisa.masafahdriver.util.BottomSpaceItemDecoration;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class OrderFragment extends BaseFragment implements OrdersViews {
@@ -54,6 +54,7 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
     private EditText search_ed;
     private ImageView ic_clear;
     private RadioGroup cities_rg;
+    private CheckBox use_free_delivery;
 
     @Nullable
     @Override
@@ -93,9 +94,8 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
                     shipment_ids.add(shipment.getId());
                 }
 
-                HashMap<String, List<String>> shipment_hashMap = new HashMap<>();
-                shipment_hashMap.put("shipment_ids", shipment_ids);
-                presenter.acceptShipment(shipment_hashMap);
+                AcceptOrderModel acceptOrderModel = new AcceptOrderModel(shipment_ids, use_free_delivery.isChecked());
+                presenter.acceptShipment(acceptOrderModel);
             });
             sw.setOnRefreshListener(() -> {
                 sw.setRefreshing(false);
@@ -136,7 +136,7 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 ArrayList<CountryModel> cityNameList = new ArrayList<>();
                 for (CountryModel city : allCitiesList) {
-                    if (city.getName().toLowerCase().startsWith(String.valueOf(s)))
+                    if (city.getName().toLowerCase().contains(String.valueOf(s).toLowerCase()))
                         cityNameList.add(city);
                 }
                 getListOfCities(cityNameList);
@@ -189,6 +189,7 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
         ic_swap = fragment.findViewById(R.id.ic_swap);
         deliveryButtonLayout = fragment.findViewById(R.id.delivery_button_layout);
         deliveryNow = deliveryButtonLayout.findViewById(R.id.deliver_now_button);
+        use_free_delivery = deliveryButtonLayout.findViewById(R.id.use_free_delivery);
         no_shipment_layout = fragment.findViewById(R.id.no_shipments_layout);
 
         sw.setColorSchemeResources(R.color.colorPrimary);

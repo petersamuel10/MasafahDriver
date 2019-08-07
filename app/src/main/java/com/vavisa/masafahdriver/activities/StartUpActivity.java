@@ -28,8 +28,8 @@ public class StartUpActivity extends BaseActivity {
         Thread timerThread =
                 new Thread() {
                     public void run() {
-                        try {
-                            sleep(3000);
+                        try     {
+                            sleep(3);
                         } catch (InterruptedException e) {
                         } finally {
                             if (Preferences.getInstance().isHasKey("access_token"))
