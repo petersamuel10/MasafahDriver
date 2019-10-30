@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.Shipment;
 import com.vavisa.masafahdriver.common_model.ShipmentModel;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class ShipmentAdapter extends RecyclerView.Adapter<ShipmentAdapter.ViewHo
     private ArrayList<ShipmentModel> shipmentList;
     private Context context;
 
-    public ShipmentAdapter(ArrayList<ShipmentModel> shipmentList) {
+    ShipmentAdapter(ArrayList<ShipmentModel> shipmentList) {
         this.shipmentList = shipmentList;
     }
 
@@ -48,7 +49,7 @@ public class ShipmentAdapter extends RecyclerView.Adapter<ShipmentAdapter.ViewHo
         return shipmentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView shipment_number_txt,
                 shipment_content_txt,
@@ -56,7 +57,7 @@ public class ShipmentAdapter extends RecyclerView.Adapter<ShipmentAdapter.ViewHo
                 drop_location_txt,
                 pick_time;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             shipment_content_txt = itemView.findViewById(R.id.shipment_description);
@@ -71,27 +72,51 @@ public class ShipmentAdapter extends RecyclerView.Adapter<ShipmentAdapter.ViewHo
             }
         }
 
-        public void bind(ShipmentModel shipmentModel) {
+        void bind(ShipmentModel shipmentModel) {
 
             shipment_number_txt.setText(shipmentModel.getId());
             pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
-            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
+            StringBuilder item_str = new StringBuilder();
+            StringBuilder drop_address_str = new StringBuilder();
+
+            for (Items item : shipmentModel.getItems()) {
+                drop_address_str.append("\u25CF").append(item.getAddress_to().getCity().getName()).append("\n");
+                item_str.append("\n\u25CF ").append(item.getAddress_to().getCity().getName()).append("\n");
+                for (Shipment shipment : item.getProducts()) {
+                    item_str.append("\t\t\t\u25CF").append(shipment.getQuantity()).append(" x   ").append(shipment.getCategory_name()).append("\n");
+                }
+            }
 
             if (shipmentModel.getIs_today()) {
                 pick_time.setText(context.getString(R.string.today));
                 pick_time.setTextColor(Color.parseColor("#3F82DC"));
                 pick_time.setTypeface(Typeface.DEFAULT_BOLD);
             } else
-                pick_time.setText(shipmentModel.getPickup_time_from().concat(" ").concat(context.getString(R.string.to)).concat(" ")
-                        .concat(shipmentModel.getPickup_time_to()));
+                pick_time.setText(shipmentModel.getPickup_time_from().concat(" ").concat(
+                        context.getString(R.string.to)).concat(" ").concat(shipmentModel.getPickup_time_to()));
 
-
-            StringBuilder item_str = new StringBuilder();
-            for (Items item : shipmentModel.getItems()) {
-                item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
-            }
-
+            drop_location_txt.setText(drop_address_str);
             shipment_content_txt.setText(item_str.toString());
+
+//            shipment_number_txt.setText(shipmentModel.getId());
+//            pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
+//            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
+//
+//            if (shipmentModel.getIs_today()) {
+//                pick_time.setText(context.getString(R.string.today));
+//                pick_time.setTextColor(Color.parseColor("#3F82DC"));
+//                pick_time.setTypeface(Typeface.DEFAULT_BOLD);
+//            } else
+//                pick_time.setText(shipmentModel.getPickup_time_from().concat(" ").concat(context.getString(R.string.to)).concat(" ")
+//                        .concat(shipmentModel.getPickup_time_to()));
+//
+//
+//            StringBuilder item_str = new StringBuilder();
+//            for (Items item : shipmentModel.getItems()) {
+//                item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
+//            }
+//
+//            shipment_content_txt.setText(item_str.toString());
         }
     }
 }

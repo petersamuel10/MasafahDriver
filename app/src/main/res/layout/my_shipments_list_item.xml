@@ -38,7 +38,6 @@
         android:layout_marginStart="@dimen/_3sdp"
         android:layout_marginLeft="@dimen/_3sdp"
         android:layout_marginTop="@dimen/_6sdp"
-        android:text="122232"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/shipment_number_tag"
@@ -50,7 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_6sdp"
         android:layout_marginLeft="@dimen/_6sdp"
-        android:layout_marginTop="@dimen/_6sdp"
         android:textColor="#A1A1A1"
         app:layout_constraintStart_toEndOf="@+id/side_border"
         app:layout_constraintTop_toBottomOf="@+id/shipment_number_tag"
@@ -81,7 +79,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Salmiya"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/filled_circle"
@@ -106,11 +103,11 @@
         android:layout_marginLeft="32dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toEndOf="@+id/light_divider"
-        app:layout_constraintTop_toTopOf="@+id/drop_location_area"
+        app:layout_constraintTop_toTopOf="@+id/drop_location"
         app:srcCompat="@drawable/ic_empty_circle" />
 
     <TextView
-        android:id="@+id/drop_location_area"
+        android:id="@+id/drop_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -118,7 +115,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Hawalli"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +122,7 @@
 
     <View
         android:id="@+id/vertical_dotted_lines"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
@@ -135,7 +131,8 @@
         app:layout_constraintBottom_toTopOf="@+id/empty_circle"
         app:layout_constraintEnd_toEndOf="@+id/filled_circle"
         app:layout_constraintStart_toStartOf="@+id/filled_circle"
-        app:layout_constraintTop_toBottomOf="@+id/filled_circle" />
+        app:layout_constraintTop_toBottomOf="@+id/filled_circle"
+        app:layout_constraintWidth_percent="0.5"/>
 
     <TextView
         android:id="@+id/pick_time_tag"

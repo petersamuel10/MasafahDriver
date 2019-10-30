@@ -69,7 +69,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private UserModel user;
     private ArrayList<CountryModel> countriesList;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
-    private int country_id = 1;
+    private int country_id = 114;
     private DialogPlus my_details_dialog;
 
     @Nullable
@@ -348,13 +348,13 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         private ImageView itemIcon;
         private TextView itemName;
 
-        public ProfileViewHolder(@NonNull View itemView) {
+        ProfileViewHolder(@NonNull View itemView) {
             super(itemView);
             itemIcon = itemView.findViewById(R.id.item_icon);
             itemName = itemView.findViewById(R.id.item_name);
         }
 
-        public void bindData(Profile profile) {
+        void bindData(Profile profile) {
             itemIcon.setImageResource(profile.getImage());
             itemName.setText(profile.getName());
         }
@@ -449,11 +449,11 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         int image;
         String name;
 
-        public int getImage() {
+        int getImage() {
             return image;
         }
 
-        public void setImage(int image) {
+        void setImage(int image) {
             this.image = image;
         }
 

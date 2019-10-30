@@ -122,7 +122,7 @@ public class InvoiceActivity extends BaseActivity implements InvoiceViews {
                     dialog.dismiss();
                     Intent intent = new Intent(InvoiceActivity.this, PaymentPage.class);
                     intent.putExtra("payment_url", paidModel.getPaymentMethod().get(position).getPaymentMethodUrl());
-                    intent.putExtra("isAddBalance",false);
+                    intent.putExtra("isAddBalance", false);
                     startActivity(intent);
                 }
             });

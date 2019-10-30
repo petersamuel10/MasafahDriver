@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.activities.MainActivity;
 import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.Shipment;
 import com.vavisa.masafahdriver.common_model.ShipmentModel;
 import com.vavisa.masafahdriver.tap_my_shipment.shipment_details.ShipmentDetailsFragment;
 import com.vavisa.masafahdriver.util.Constants;
@@ -32,7 +33,7 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
     private FragmentActivity activity;
     private MyShipmentsFragment myShipmentsFragment;
 
-    public MyShipmentAdapter(ArrayList<ShipmentModel> myShipmentList, FragmentActivity activity, MyShipmentsFragment myShipmentsFragment) {
+    MyShipmentAdapter(ArrayList<ShipmentModel> myShipmentList, FragmentActivity activity, MyShipmentsFragment myShipmentsFragment) {
         this.myShipmentList = myShipmentList;
         this.activity = activity;
         this.myShipmentsFragment = myShipmentsFragment;
@@ -58,10 +59,10 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
             Bundle bundle = new Bundle();
             bundle.putString("shipment_id", myShipmentList.get(position).getId());
             Fragment fragment = new ShipmentDetailsFragment();
-            fragment.setTargetFragment(myShipmentsFragment,101);
+            fragment.setTargetFragment(myShipmentsFragment, 101);
             fragment.setArguments(bundle);
 
-            ((MainActivity)activity).pushFragments(Constants.TAB_SHIPMENT,fragment,true);
+            ((MainActivity) activity).pushFragments(Constants.TAB_SHIPMENT, fragment, true);
 
         });
     }
@@ -71,7 +72,7 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
         return myShipmentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView shipment_number_txt,
                 shipment_content_txt,
@@ -80,13 +81,13 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
                 pick_time;
         ImageView picked_img;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             shipment_content_txt = itemView.findViewById(R.id.shipment_description);
             shipment_number_txt = itemView.findViewById(R.id.shipment_number);
             pickup_location_txt = itemView.findViewById(R.id.pickup_location);
-            drop_location_txt = itemView.findViewById(R.id.drop_location_area);
+            drop_location_txt = itemView.findViewById(R.id.drop_location);
             pick_time = itemView.findViewById(R.id.pick_time);
             picked_img = itemView.findViewById(R.id.picked_img);
 
@@ -96,40 +97,46 @@ public class MyShipmentAdapter extends RecyclerView.Adapter<MyShipmentAdapter.Vi
             }
         }
 
-        public void bind(ShipmentModel shipmentModel) {
+        void bind(ShipmentModel shipmentModel) {
 
             shipment_number_txt.setText(shipmentModel.getId());
             pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
-            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
+            StringBuilder item_str = new StringBuilder();
+            StringBuilder drop_address_str = new StringBuilder();
+
+            for (Items item : shipmentModel.getItems()) {
+                drop_address_str.append("\u25CF").append(item.getAddress_to().getCity().getName()).append("\n");
+                item_str.append("\n\u25CF ").append(item.getAddress_to().getCity().getName()).append("\n");
+                for (Shipment shipment : item.getProducts()) {
+                    item_str.append("\t\t\t\u25CF").append(shipment.getQuantity()).append(" x   ").append(shipment.getCategory_name()).append("\n");
+                }
+            }
 
             if (shipmentModel.getIs_today()) {
                 pick_time.setText(context.getString(R.string.today));
                 pick_time.setTextColor(Color.parseColor("#3F82DC"));
                 pick_time.setTypeface(Typeface.DEFAULT_BOLD);
             } else
-                pick_time.setText(shipmentModel.getPickup_time_from() + " " +
-                        context.getString(R.string.to) + " " + shipmentModel.getPickup_time_to());
+                pick_time.setText(shipmentModel.getPickup_time_from().concat(" ").concat(
+                        context.getString(R.string.to)).concat(" ").concat(shipmentModel.getPickup_time_to()));
 
             if (shipmentModel.getStatus().equals("3"))
                 picked_img.setImageResource((Constants.LANGUAGE.equals("en")) ? R.drawable.ic_picked_en : R.drawable.ic_picked_ar);
 
-            StringBuilder item_str = new StringBuilder();
-            for (Items item : shipmentModel.getItems()) {
-                item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
-            }
-
+            drop_location_txt.setText(drop_address_str);
             shipment_content_txt.setText(item_str.toString());
+
         }
     }
 
-    public void updateShipmentItem(ShipmentModel shipmentModel) {
+    void updateShipmentItem(ShipmentModel shipmentModel) {
         int index = getShipmentIndex(shipmentModel);
         shipmentModel.setStatus("3");
         myShipmentList.set(index, shipmentModel);
         notifyDataSetChanged();
     }
 
-    public void removeShipmentItem(ShipmentModel shipmentModel) {
+    void removeShipmentItem(ShipmentModel shipmentModel) {
         int index = getShipmentIndex(shipmentModel);
         myShipmentList.remove(index);
         notifyItemRemoved(index);

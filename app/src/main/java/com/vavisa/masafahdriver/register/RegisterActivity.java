@@ -40,7 +40,7 @@ public class RegisterActivity extends BaseActivity implements RegisterViews {
     private Bitmap bitmap = null;
 
     private ArrayList<CountryModel> countriesList;
-    private Integer select_country_pos = 0, country_id = 1;
+    private Integer select_country_pos = 0, country_id = 114;
     private final int PICK_IMAGE_CAMERA = 1, PICK_IMAGE_GALLERY = 2;
     private RegisterPresenter presenter;
 

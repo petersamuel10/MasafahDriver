@@ -10,9 +10,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class InvoicePresenter extends BasePresenter<InvoiceViews> {
+class InvoicePresenter extends BasePresenter<InvoiceViews> {
 
-    public void payOrder(String order_id) {
+    void payOrder(String order_id) {
         if (Connectivity.checkInternetConnection()) {
             getView().showProgress();
             APIManager.getInstance().getAPI().payOrderCall(Preferences.getInstance().getString("access_token"), order_id)

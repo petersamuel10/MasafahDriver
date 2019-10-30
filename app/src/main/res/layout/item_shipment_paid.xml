@@ -109,7 +109,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="4dp"
-        android:text="Hawalli"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +116,7 @@
 
     <View
         android:id="@+id/vertical_dotted_lines"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
@@ -126,7 +125,8 @@
         app:layout_constraintBottom_toTopOf="@+id/empty_circle"
         app:layout_constraintEnd_toEndOf="@+id/filled_circle"
         app:layout_constraintStart_toStartOf="@+id/filled_circle"
-        app:layout_constraintTop_toBottomOf="@+id/filled_circle" />
+        app:layout_constraintTop_toBottomOf="@+id/filled_circle"
+        app:layout_constraintWidth_percent="0.5"/>
 
     <TextView
         android:id="@+id/pick_time_tag"

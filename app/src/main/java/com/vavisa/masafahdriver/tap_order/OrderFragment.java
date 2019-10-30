@@ -45,7 +45,7 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
     private NestedScrollView scrollView;
     public RelativeLayout deliveryButtonLayout, no_shipment_layout;
     private TextView from_location_name, to_location_name;
-    private ImageView ic_swap;
+    private ImageView ic_swap, location_icon_from, location_icon_to;
     public Button deliveryNow;
     private OrderPresenter presenter;
     private OrderAdapter adapter;
@@ -102,11 +102,10 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
                 presenter.getShipment(from_id, to_id);
             });
 
-            from_location_name.setOnClickListener(v -> showCityAlert(true, (from_id == null) ? 0 : Integer.valueOf(from_id)));
-            to_location_name.setOnClickListener(v -> showCityAlert(false, (to_id == null) ? 0 : Integer.valueOf(to_id)));
+            location_icon_from.setOnClickListener(v -> showCityAlert(true, (from_id == null) ? 0 : Integer.valueOf(from_id)));
+            location_icon_to.setOnClickListener(v -> showCityAlert(false, (to_id == null) ? 0 : Integer.valueOf(to_id)));
 
         }
-
         return fragment;
     }
 
@@ -185,6 +184,8 @@ public class OrderFragment extends BaseFragment implements OrdersViews {
         scrollView = fragment.findViewById(R.id.scrollView);
         sw = fragment.findViewById(R.id.sw);
         from_location_name = fragment.findViewById(R.id.from_location_name);
+        location_icon_from = fragment.findViewById(R.id.location_icon_from);
+        location_icon_to = fragment.findViewById(R.id.location_icon_to);
         to_location_name = fragment.findViewById(R.id.to_location_name);
         ic_swap = fragment.findViewById(R.id.ic_swap);
         deliveryButtonLayout = fragment.findViewById(R.id.delivery_button_layout);

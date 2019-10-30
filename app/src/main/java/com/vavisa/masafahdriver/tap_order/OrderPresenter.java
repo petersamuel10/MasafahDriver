@@ -17,9 +17,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OrderPresenter extends BasePresenter<OrdersViews> {
+ class OrderPresenter extends BasePresenter<OrdersViews> {
 
-    public void getShipment(String from_id, String to_id) {
+     void getShipment(String from_id, String to_id) {
         if (Connectivity.checkInternetConnection()) {
             getView().showProgress();
             APIManager.getInstance().getAPI().orderListCall(Preferences.getInstance().getString("access_token"), from_id, to_id)
@@ -43,7 +43,7 @@ public class OrderPresenter extends BasePresenter<OrdersViews> {
             getView().showErrorConnection();
     }
 
-    public void getMyCities() {
+    void getMyCities() {
         getView().showProgress();
         APIManager.getInstance().getAPI().myCitiesCall(Preferences.getInstance().getString("access_token"))
                 .enqueue(new Callback<ArrayList<CountryModel>>() {
@@ -64,7 +64,7 @@ public class OrderPresenter extends BasePresenter<OrdersViews> {
                 });
     }
 
-    public void acceptShipment(AcceptOrderModel acceptOrderModel) {
+    void acceptShipment(AcceptOrderModel acceptOrderModel) {
         if (Connectivity.checkInternetConnection()) {
             getView().showProgress();
             APIManager.getInstance().getAPI().acceptShipmentCall(Preferences.getInstance().getString("access_token"), acceptOrderModel)

@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:text="Orders"
+            android:text="@string/orders"
             android:textColor="@android:color/white"
             android:textSize="26sp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/location_icon1"
+            android:id="@+id/location_icon_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -63,8 +63,8 @@
             android:layout_marginTop="14dp"
             android:text="@string/from"
             android:textColor="#a1a1a1"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/location_icon1"
+            android:textSize="@dimen/_7ssp"
+            app:layout_constraintStart_toEndOf="@+id/location_icon_from"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
             android:textColor="@android:color/black"
-            app:layout_constraintStart_toEndOf="@+id/location_icon1"
+            app:layout_constraintStart_toEndOf="@+id/location_icon_from"
             app:layout_constraintTop_toBottomOf="@+id/from_tag" />
 
         <ImageView
@@ -94,7 +94,7 @@
             app:srcCompat="@drawable/ic_swap" />
 
         <ImageView
-            android:id="@+id/location_icon2"
+            android:id="@+id/location_icon_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -114,7 +114,7 @@
             android:layout_marginTop="14dp"
             android:text="@string/to"
             android:textColor="#a1a1a1"
-            android:textSize="10sp"
+            android:textSize="@dimen/_7ssp"
             app:layout_constraintStart_toStartOf="@+id/to_location_name"
             app:layout_constraintTop_toTopOf="parent" />
 

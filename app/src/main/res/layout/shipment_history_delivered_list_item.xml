@@ -131,7 +131,7 @@
 
     <View
         android:id="@+id/vertical_dotted_lines"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
@@ -140,6 +140,7 @@
         app:layout_constraintBottom_toTopOf="@+id/empty_circle"
         app:layout_constraintEnd_toEndOf="@+id/filled_circle"
         app:layout_constraintStart_toStartOf="@+id/filled_circle"
-        app:layout_constraintTop_toBottomOf="@+id/filled_circle" />
+        app:layout_constraintTop_toBottomOf="@+id/filled_circle"
+        app:layout_constraintWidth_percent="0.5"/>
 
 </android.support.constraint.ConstraintLayout>

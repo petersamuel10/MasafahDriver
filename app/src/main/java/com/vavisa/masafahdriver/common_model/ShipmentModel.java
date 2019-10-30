@@ -31,8 +31,6 @@ public class ShipmentModel implements Parcelable {
     private ArrayList<Items> items;
     @SerializedName("address_from")
     private AddressModel address_from;
-    @SerializedName("address_to")
-    private AddressModel address_to;
 
 
     protected ShipmentModel(Parcel in) {
@@ -48,7 +46,6 @@ public class ShipmentModel implements Parcelable {
         payment_type = in.readString();
         items = in.createTypedArrayList(Items.CREATOR);
         address_from = in.readParcelable(AddressModel.class.getClassLoader());
-        address_to = in.readParcelable(AddressModel.class.getClassLoader());
     }
 
     @Override
@@ -64,7 +61,6 @@ public class ShipmentModel implements Parcelable {
         dest.writeString(payment_type);
         dest.writeTypedList(items);
         dest.writeParcelable(address_from, flags);
-        dest.writeParcelable(address_to, flags);
     }
 
     @Override
@@ -128,9 +124,6 @@ public class ShipmentModel implements Parcelable {
 
     public AddressModel getAddress_from() {
         return address_from;
-    }
-    public AddressModel getAddress_to() {
-        return address_to;
     }
 
 

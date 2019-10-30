@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.basic.BaseFragment;
 import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.Shipment;
 import com.vavisa.masafahdriver.common_model.ShipmentModel;
 
 public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDetailsViews {
@@ -27,7 +28,7 @@ public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDet
     private ScrollView scrollView;
     private TextView shipment_description,
             pickup_location, pickup_block_street, pickup_building, pickup_mobile,
-            drop_location, drop_block_street, drop_building, drop_mobile,
+            drop_location, drop_mobile,
             time_from_txt, total_txt;
 
     private Button pickup_btn;
@@ -56,8 +57,6 @@ public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDet
         pickup_building = view.findViewById(R.id.pickup_building);
         pickup_mobile = view.findViewById(R.id.pickup_mobile);
         drop_location = view.findViewById(R.id.drop_location);
-        drop_block_street = view.findViewById(R.id.drop_block_street);
-        drop_building = view.findViewById(R.id.drop_building);
         drop_mobile = view.findViewById(R.id.drop_mobile);
         time_from_txt = view.findViewById(R.id.time_from);
         total_txt = view.findViewById(R.id.total_amount);
@@ -104,26 +103,29 @@ public class ShipmentDetailsFragment extends BaseFragment implements ShipmentDet
         this.shipment_id = shipmentModel.getId();
         this.shipmentModel = shipmentModel;
 
+
         scrollView.setVisibility(View.VISIBLE);
+
         StringBuilder item_str = new StringBuilder();
+        StringBuilder drop_address_str = new StringBuilder();
+
         for (Items item : shipmentModel.getItems()) {
-            item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
+            drop_address_str.append("\u25CF").append(item.getAddress_to().getCity().getName()).append("\n");
+            item_str.append("\n\u25CF ").append(item.getAddress_to().getCity().getName()).append("\n");
+            for (Shipment shipment : item.getProducts()) {
+                item_str.append("\t\t\t\u25CF").append(shipment.getQuantity()).append(" x   ").append(shipment.getCategory_name()).append("\n");
+            }
         }
 
         shipment_description.setText(item_str.toString());
+        drop_location.setText(drop_address_str.toString());
+
         pickup_location.setText(shipmentModel.getAddress_from().getCity().getName());
         pickup_block_street.setText(shipmentModel.getAddress_from().getBlock().concat(" - ")
                 .concat(shipmentModel.getAddress_from().getStreet()));
         pickup_building.setText(shipmentModel.getAddress_from().getBuilding().concat(" - "));
         pickup_mobile.setText(shipmentModel.getAddress_from().getMobile());
         pickup_mobile_str = shipmentModel.getAddress_from().getMobile();
-
-        drop_location.setText(shipmentModel.getAddress_to().getCity().getName());
-        drop_block_street.setText(shipmentModel.getAddress_to().getBlock().concat(" - ")
-                .concat(shipmentModel.getAddress_from().getStreet()));
-        drop_building.setText(shipmentModel.getAddress_to().getBuilding().concat(" - "));
-        drop_mobile.setText(shipmentModel.getAddress_to().getMobile());
-        drop_mobile_str = shipmentModel.getAddress_to().getMobile();
 
         if (shipmentModel.getIs_today()) {
             time_from_txt.setText(getString(R.string.today));

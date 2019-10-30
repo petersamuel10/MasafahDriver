@@ -1,6 +1,5 @@
 package com.vavisa.masafahdriver.tap_profile.shipment_history;
 
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,16 +11,16 @@ import android.widget.TextView;
 
 import com.vavisa.masafahdriver.R;
 import com.vavisa.masafahdriver.common_model.Items;
+import com.vavisa.masafahdriver.common_model.Shipment;
 import com.vavisa.masafahdriver.common_model.ShipmentModel;
 
 import java.util.ArrayList;
 
 public class MyShipmentsDeliveredAdapter extends RecyclerView.Adapter<MyShipmentsDeliveredAdapter.ViewHolder> {
 
-    private Context context;
     private ArrayList<ShipmentModel> shipmentList;
 
-    public MyShipmentsDeliveredAdapter(ArrayList<ShipmentModel> shipmentList) {
+    MyShipmentsDeliveredAdapter(ArrayList<ShipmentModel> shipmentList) {
         this.shipmentList = shipmentList;
     }
 
@@ -31,8 +30,6 @@ public class MyShipmentsDeliveredAdapter extends RecyclerView.Adapter<MyShipment
         View v =
                 LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.shipment_history_delivered_list_item, viewGroup, false);
-
-        context = viewGroup.getContext();
 
         return new ViewHolder(v);
     }
@@ -48,14 +45,14 @@ public class MyShipmentsDeliveredAdapter extends RecyclerView.Adapter<MyShipment
         return shipmentList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView shipment_number_txt,
                 shipment_content_txt,
                 pickup_location_txt,
                 drop_location_txt;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             shipment_content_txt = itemView.findViewById(R.id.shipment_description);
@@ -69,18 +66,35 @@ public class MyShipmentsDeliveredAdapter extends RecyclerView.Adapter<MyShipment
             }
         }
 
-        public void bind(ShipmentModel shipmentModel) {
+        void bind(ShipmentModel shipmentModel) {
 
             shipment_number_txt.setText(shipmentModel.getId());
             pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
-            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
-
             StringBuilder item_str = new StringBuilder();
+            StringBuilder drop_address_str = new StringBuilder();
+
             for (Items item : shipmentModel.getItems()) {
-                item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
+                drop_address_str.append("\u25CF").append(item.getAddress_to().getCity().getName()).append("\n");
+                item_str.append("\n\u25CF ").append(item.getAddress_to().getCity().getName()).append("\n");
+                for (Shipment shipment : item.getProducts()) {
+                    item_str.append("\t\t\t\u25CF").append(shipment.getQuantity()).append(" x   ").append(shipment.getCategory_name()).append("\n");
+                }
             }
 
+
+            drop_location_txt.setText(drop_address_str);
             shipment_content_txt.setText(item_str.toString());
+
+//            shipment_number_txt.setText(shipmentModel.getId());
+//            pickup_location_txt.setText(shipmentModel.getAddress_from().getCity().getName());
+//            drop_location_txt.setText(shipmentModel.getAddress_to().getCity().getName());
+//
+//            StringBuilder item_str = new StringBuilder();
+//            for (Items item : shipmentModel.getItems()) {
+//                item_str.append("\u25CF ").append(item.getQuantity()).append(" x   ").append(item.getCategory_name()).append("\n");
+//            }
+//
+//            shipment_content_txt.setText(item_str.toString());
 
         }
     }

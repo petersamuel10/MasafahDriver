@@ -5,26 +5,25 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Items implements Parcelable {
 
-    @SerializedName("category_id")
-    private String category_id;
-    @SerializedName("category_name")
-    private String category_name;
-    @SerializedName("quantity")
-    private String quantity;
+    @SerializedName("address_to")
+    private AddressModel address_to;
+    @SerializedName("products")
+    private ArrayList<Shipment> products;
+
 
     protected Items(Parcel in) {
-        category_id = in.readString();
-        category_name = in.readString();
-        quantity = in.readString();
+        address_to = in.readParcelable(AddressModel.class.getClassLoader());
+        products = in.createTypedArrayList(Shipment.CREATOR);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(category_id);
-        dest.writeString(category_name);
-        dest.writeString(quantity);
+        dest.writeParcelable(address_to, flags);
+        dest.writeTypedList(products);
     }
 
     @Override
@@ -44,13 +43,17 @@ public class Items implements Parcelable {
         }
     };
 
-    public String getCategory_id() {
-        return category_id;
+    public AddressModel getAddress_to() {
+        return address_to;
     }
-    public String getCategory_name() {
-        return category_name;
+    public void setAddress_to(AddressModel address_to) {
+        this.address_to = address_to;
     }
-    public String getQuantity() {
-        return quantity;
+
+    public ArrayList<Shipment> getProducts() {
+        return products;
+    }
+    public void setProducts(ArrayList<Shipment> products) {
+        this.products = products;
     }
 }

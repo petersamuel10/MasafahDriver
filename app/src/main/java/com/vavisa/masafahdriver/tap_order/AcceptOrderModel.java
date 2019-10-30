@@ -11,7 +11,7 @@ public class AcceptOrderModel {
     @SerializedName("use_free_deliveries")
     private boolean use_free_deliveries;
 
-    public AcceptOrderModel(List<String> shipment_ids, boolean use_free_deliveries) {
+    AcceptOrderModel(List<String> shipment_ids, boolean use_free_deliveries) {
         this.shipment_ids = shipment_ids;
         this.use_free_deliveries = use_free_deliveries;
     }
@@ -19,6 +19,7 @@ public class AcceptOrderModel {
     public void setShipment_ids(List<String> shipment_ids) {
         this.shipment_ids = shipment_ids;
     }
+
     public void setUse_free_deliveries(boolean use_free_deliveries) {
         this.use_free_deliveries = use_free_deliveries;
     }
