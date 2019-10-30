@@ -69,6 +69,7 @@ public class RegisterPresenter extends BasePresenter<RegisterViews> {
     }
 
     public String getImageBase64FromView(ImageView imageView) {
+
         if (imageView.getDrawable() != null) {
             Bitmap defaultPhotoBitMap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

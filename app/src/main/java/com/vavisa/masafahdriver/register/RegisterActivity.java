@@ -90,18 +90,15 @@ public class RegisterActivity extends BaseActivity implements RegisterViews {
 
         android.support.v7.app.AlertDialog.Builder select_pic_alert = new android.support.v7.app.AlertDialog.Builder(this);
         select_pic_alert.setTitle(getString(R.string.select_picture_from));
-        select_pic_alert.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int index) {
+        select_pic_alert.setItems(items, (dialog, index) -> {
 
-                if (index == 0) {
-                    Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (camera_intent.resolveActivity(getPackageManager()) != null)
-                        startActivityForResult(camera_intent, PICK_IMAGE_CAMERA);
-                } else
-                    startActivityForResult(new Intent(Intent.ACTION_PICK,
-                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI), PICK_IMAGE_GALLERY);
-            }
+            if (index == 0) {
+                Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (camera_intent.resolveActivity(getPackageManager()) != null)
+                    startActivityForResult(camera_intent, PICK_IMAGE_CAMERA);
+            } else
+                startActivityForResult(new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI), PICK_IMAGE_GALLERY);
         });
 
         select_pic_alert.show();
