@@ -37,7 +37,6 @@ public class LoginPresenter extends BasePresenter<LoginViews> {
             });
         } else
             getView().showErrorConnection();
-
     }
 
 }

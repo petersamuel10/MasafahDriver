@@ -44,6 +44,7 @@ public class LoginActivity extends BaseActivity implements LoginViews {
         });
         forgot_password.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class)));
         create_new_account.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
+
     }
 
     private boolean isValid() {
